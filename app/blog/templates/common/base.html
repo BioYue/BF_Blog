@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BF-Blog</title>
+    <link rel="stylesheet" href="{{ url_for('blog.static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('blog.static', filename='layui/css/layui.css') }}">
+    <script type="text/javascript" src="{{ url_for('blog.static', filename='layui/layui.js') }}"></script>
+
+</head>
+<body>
+{% block body %}
+    {% block header %}
+        {# 博客头部导航栏 #}
+        <header class="header">
+            {#    layui-container自适应比例固定宽度    #}
+            <div class="layui-container">
+                {# 博客logo #}
+                <div class="logopic">
+                    <a href="/">
+                        <img src="{{ url_for('blog.static',filename='imgs/logo.png') }}" alt="">
+                    </a>
+                </div>
+                {# 博客标题 #}
+                <a class="logo" href="/">
+                    <h2>BF_Blog</h2>
+                </a>
+                {# 博客副标题 #}
+                <span>天青色等烟雨 而我在等你</span>
+                {# 导航菜单 #}
+                 <ul class="layui-nav layui-layout-right">
+                    <li class="layui-nav-item">
+                        <a href="/">首页</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="#">归档</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="#">笔记</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="#">留言</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="#">关于</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+    {% endblock header %}
+{% endblock body %}
+</body>
+</html>

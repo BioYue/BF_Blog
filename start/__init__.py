@@ -27,7 +27,7 @@ def create_app():
     # 注册迁移对象
     migrate.init_app(app, db)
     # 注册login管理
-    login_manager.init_app(app)
+    # login_manager.init_app(app)
 
     # 注册模型
     from app.blog import models
