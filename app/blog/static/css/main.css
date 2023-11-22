@@ -8,7 +8,7 @@ body {
     line-height: 1.8em;
 }
 
-/* --- 头部样式 --- */
+/* ------------ 头部样式 ------------ */
 .header {
     width: 100%;
     height: 60px;
@@ -51,4 +51,17 @@ body {
 /*导航项鼠标悬停颜色*/
 .header .layui-nav .layui-nav-item a:hover {
     color: #12caea !important;
+}
+
+/* ------------ 底部样式 ------------ */
+.footer {
+    width: 100%;
+    height: 50px;
+    padding: 16px;
+    color: #FFF;
+    background-color: #227eaa;
+    box-sizing: border-box;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
 }
