@@ -4,34 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BF-Blog</title>
-    <link rel="stylesheet" href="{{ url_for('blog.static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('blog.static', filename='layui/css/layui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('blog.static', filename='css/main.css') }}">
     <script type="text/javascript" src="{{ url_for('blog.static', filename='layui/layui.js') }}"></script>
-
 </head>
 <body>
+<script type="text/javascript" src="{{ url_for('blog.static', filename='js/canvas-nest.js') }}" color="18,214,120"
+        opacity="0.7" count="200"></script>
 {% block body %}
     {% block header %}
-        {# 博客头部导航栏 #}
         <header class="header">
             {#    layui-container自适应比例固定宽度    #}
             <div class="layui-container">
-                {# 博客logo #}
                 <div class="logopic">
-                    <a href="/">
+                    <a href="/app/blog/static">
                         <img src="{{ url_for('blog.static',filename='imgs/logo.png') }}" alt="">
                     </a>
                 </div>
-                {# 博客标题 #}
-                <a class="logo" href="/">
+                <a class="logo" href="/app/blog/static">
                     <h2>BF_Blog</h2>
                 </a>
-                {# 博客副标题 #}
                 <span>天青色等烟雨 而我在等你</span>
-                {# 导航菜单 #}
-                 <ul class="layui-nav layui-layout-right">
+                <ul class="layui-nav layui-layout-right">
                     <li class="layui-nav-item">
-                        <a href="/">首页</a>
+                        <a href="/app/blog/static">首页</a>
                     </li>
                     <li class="layui-nav-item">
                         <a href="#">归档</a>
@@ -49,14 +45,26 @@
             </div>
         </header>
     {% endblock header %}
-    
+
     {% block content %}
     {% endblock %}
-    
+
     {% block footer %}
-    	<footer class="footer">
+        <footer class="footer">
             <p>Copyright &nbsp;&copy;&nbsp; 2023&nbsp;&nbsp;Bei-Feng</p>
         </footer>
+    {% endblock %}
+    {% block script %}
+{#        <script>#}
+{#            layui.use(function () {#}
+{#                let $ = layui.$;#}
+{#                $('#adminlogin').mouseenter(function () {#}
+{#                    $("#adminlogin img").css('animation', 'rotate 0.75s linear')#}
+{#                }).mouseleave(function () {#}
+{#                    $("#adminlogin img").css('animation', '')#}
+{#                })#}
+{#            });#}
+{#        </script>#}
     {% endblock %}
 {% endblock body %}
 </body>
