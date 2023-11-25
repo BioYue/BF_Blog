@@ -1,0 +1,57 @@
+{% extends 'admin/common/base.html' %}
+{% block title %}
+    分类管理 - 北枫小站
+{% endblock %}
+{% block main_title %}
+    分类管理
+{% endblock %}
+{% block content %}
+    <div class="layui-container">
+        <button type="button" class="layui-btn" lay-on="prompt">新增分类</button>
+        <table class="layui-hide" id="ID-table-demo-data"></table>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        layui.use('table', function () {
+            let table = layui.table;
+            let $ = layui.$;
+            let layer = layui.layer;
+            let util = layui.util;
+            // 新增分类
+            util.on('lay-on', {
+                prompt: () => {
+                    layer.prompt({title: '请输入分类名称', maxlength: 20}, (value, index, elem) => {
+                        if (value !== '') {
+                            $.post('{{ url_for('admin.category_add') }}', {value: value},
+                                (res) => {
+                                    console.log(res)
+                                    res === 'success' ? location.reload() : console.log('分类已存在')
+                                }
+                            )
+                            layer.close(index);
+                        }
+                    })
+                }
+            })
+
+
+            // 已知数据渲染
+            let inst = table.render({
+                elem: '#ID-table-demo-data',
+                url: '{{ url_for("admin.category_query") }}',
+                cols: [[ //标题栏
+                    {field: 'id', title: '序号', width: 120, sort: true},
+                    {field: 'name', title: '分类名称', width: 180},
+                    {field: 'add_time', title: '创建时间', minWidth: 120},
+                    {field: 'upd_time', title: '修改时间', width: 120}
+                ]],
+                //skin: 'line', // 表格风格
+                //even: true,
+                page: true, // 是否显示分页
+                limits: [5, 10, 15],
+                limit: 5 // 每页默认显示的数量
+            });
+        });
+    </script>
+{% endblock %}

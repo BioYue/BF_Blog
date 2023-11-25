@@ -1,0 +1,108 @@
+{% extends 'admin/common/base.html' %}
+{% block title %}
+    标签管理 - 北枫小站
+{% endblock %}
+{% block main_title %}
+    标签管理
+{% endblock %}
+{% block content %}
+    <div class="layui-container">
+        <button type="button" class="layui-btn" lay-on="prompt">新增标签</button>
+        <table class="layui-hide" id="ID-table-demo-data"></table>
+
+        <script type="text/html" id="add-tag-form">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标签名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="tag_name" lay-verify="required" placeholder="请输入标签名称"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标签颜色</label>
+                    <div class="layui-input-inline" style="width: 120px;">
+                        <input type="text" name="tag_color" placeholder="请选择颜色" class="layui-input"
+                               id="ID-colorpicker-demo-form-color">
+                    </div>
+                    <div class="layui-inline" style="left: -11px;">
+                        <div id="ID-colorpicker-demo-form"></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="add-tag">确认添加</button>
+                    </div>
+                </div>
+            </form>
+        </script>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        layui.use(['table', 'layer', 'util', 'colorpicker', 'form'], function () {
+            let table = layui.table;
+            let $ = layui.$;
+            let layer = layui.layer;
+            let util = layui.util;
+            let colorpicker = layui.colorpicker;
+            let form = layui.form;
+
+
+            // 新增标签
+            util.on('lay-on', {
+                prompt: () => {
+                    layer.open({
+                        type: 1,
+                        title: '新增标签',
+                        content: $('#add-tag-form').html(),
+                        area: ['400px', '250px'],
+                        success: function (layero, index) {
+                            // 渲染颜色选择器
+                            colorpicker.render({
+                                elem: '#ID-colorpicker-demo-form',
+                                color: '#1c97f5',
+                                done: function (color) {
+                                    $('#ID-colorpicker-demo-form-color').val(color);
+                                }
+                            });
+
+                            // 监听提交
+                            form.on('submit(add-tag)', function (data) {
+                                // 发送新增标签的请求
+                                $.post('{{ url_for('admin.tag_add') }}', data.field,
+                                    (res) => {
+                                        console.log(res);
+                                        res === 'success' ? location.reload() : console.log('标签已存在');
+                                    }
+                                );
+                                layer.close(index);
+                                return false;
+                            });
+                        }
+                    });
+                }
+            });
+
+            // 已知数据渲染
+            let inst = table.render({
+                elem: '#ID-table-demo-data',
+                url: '{{ url_for("admin.tag_query") }}',
+                cols: [
+                    [   //标题栏
+                        {field: 'id', title: '序号', width: 120, sort: true},
+                        {field: 'name', title: '分类名称', width: 180},
+                        {field: 'color', title: '分类颜色', width: 180},
+                        {field: 'add_time', title: '创建时间', minWidth: 120},
+                        {field: 'upd_time', title: '修改时间', width: 120}
+                    ]
+                ],
+                //skin: 'line', // 表格风格
+                //even: true,
+                page: true, // 是否显示分页
+                limits: [5, 10, 15],
+                limit: 5 // 每页默认显示的数量
+            });
+        });
+    </script>
+{% endblock %}
