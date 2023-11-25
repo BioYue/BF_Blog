@@ -10,6 +10,12 @@ body {
     min-height: 100vh;
 }
 
+body::after {
+    content: '';
+    height: 60px; /* .footer 的高度 */
+    display: block;
+}
+
 ::-webkit-scrollbar {
     width: 7px;
     height: 7px;
@@ -17,8 +23,8 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: rgba(196, 196, 196, 0.7);
+    border-radius: 10px;
+    background: rgba(196, 196, 196, 0.7);
 }
 
 /* ------------ layui重写 ------------ */
@@ -104,43 +110,10 @@ body {
 }
 
 .side-search .layui-input {
-    width: 185px;
+    width: 183px;
     height: 30px;
-    margin-right: 10px;
-}
-
-/* --- 我的信息样式 --- */
-/*@keyframes rotate{*/
-/*    0%{*/
-/*       transform: rotateZ(0deg);!*从0度开始*!*/
-/*    }*/
-/*    20%{*/
-/*       transform: rotateZ(-50deg);*/
-/*    }*/
-/*    40%{*/
-/*       transform: rotateZ(-20deg);*/
-/*    }*/
-/*    60%{*/
-/*       transform: rotateZ(-50deg);*/
-/*    }*/
-/*    80%{*/
-/*       transform: rotateZ(-20deg);*/
-/*    }*/
-/*    100%{*/
-/*       transform: rotateZ(0deg);*/
-/*    }*/
-/*}*/
-
-@keyframes rotate{
-    0%{
-       transform: rotateZ(0deg);/*从0度开始*/
-    }
-    30%{
-       transform: rotateZ(30deg);
-    }
-    100%{
-       transform: rotateZ(360deg);
-    }
+    margin-right: 5px;
+    border-radius: 4px;
 }
 
 .side-avata {
@@ -167,7 +140,6 @@ body {
     height: 150px;
     border-radius: 8px;
 }
-
 
 #adminlogin {
     display: inline-block;
@@ -210,8 +182,8 @@ body {
     border-bottom: 1px solid #eee;
     width: 100%;
     color: #666;
-    padding-bottom: 5px;
-    margin-bottom: 5px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
     overflow: hidden;
     font-weight: 400;
 }
@@ -222,7 +194,7 @@ body {
     box-sizing: border-box;
     padding: 10px 20px;
     margin-top: 15px;
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
     min-height: 100px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
@@ -246,7 +218,7 @@ body {
     box-sizing: border-box;
     padding: 10px 20px;
     margin-top: 15px;
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
     min-height: 100px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
@@ -263,7 +235,7 @@ body {
     padding: 10px 20px;
     margin-top: 15px;
     margin-bottom: 15px;
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
     min-height: 100px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
@@ -284,7 +256,7 @@ body {
     box-sizing: border-box;
     padding: 10px 20px;
     margin-bottom: 15px;
-    border-radius: 5px;
+    border-radius: 8px;
     min-height: 100px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
     word-break: break-all;
@@ -317,6 +289,8 @@ body {
 .post-msg .author {
     color: #909399;
 }
+
+
 
 
 

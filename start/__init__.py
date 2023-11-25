@@ -19,8 +19,10 @@ def create_app():
 
     # 引入blog视图(这个引入必须放在create_app里)
     from app.blog import views as blog
+    from app.admin import views as admin
     # 注册blog蓝图
     app.register_blueprint(blog.bp)
+    app.register_blueprint(admin.bp)
 
     # 注册数据库
     db.init_app(app)

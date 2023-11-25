@@ -1,0 +1,77 @@
+/* ------------ 头部样式 ------------ */
+.header {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    background-color: #227eaa;
+    z-index: 1000;
+    margin-bottom: 15px;
+}
+
+/* header区域字体颜色 */
+.header * {
+    color: #FFF !important;
+}
+
+.header .logopic {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+
+.header .logopic img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.header .logo {
+    display: inline-block;
+    padding: 15px 10px;
+}
+
+/*清除导航原背景颜色*/
+.header .layui-nav {
+    background: none;
+}
+
+/*清除导航项选中后的绿条标记*/
+.header .layui-nav .layui-this:after {
+    content: none;
+}
+
+/*导航项鼠标悬停颜色*/
+.header .layui-nav .layui-nav-item a:hover {
+    color: #12caea !important;
+}
+
+/* 头像 */
+.header_avata img{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.header_avata dl,dd{
+    border-radius: 8px;
+    border: 1px solid #227eaa;
+    color: #1f1f1f !important;
+    background-color: #227eaa !important;
+}
+
+.header .layui-nav .header_avata dl a:hover {
+    background-color: #227eaa;
+}
+
+
+/* ------------ 底部样式 ------------ */
+.footer {
+    width: 100%;
+    height: 30px;
+    padding: 16px 0;
+    color: #FFF;
+    background-color: #227eaa;
+    text-align: center;
+    margin-top: 15px;
+    position: absolute;
+    bottom: 0;
+}
