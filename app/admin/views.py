@@ -19,10 +19,22 @@ def index():
     return render_template('admin/index.html')
 
 
-# 文章管理页
 @bp.route('/post')
 def post():
+    """
+    文章管理-首页
+    :return:
+    """
     return render_template('admin/post.html')
+
+
+@bp.route('/editor_post')
+def editor_post():
+    """
+    文章管理-编辑文章页
+    :return:
+    """
+    return render_template('admin/editor_post.html')
 
 
 @bp.route('/category')

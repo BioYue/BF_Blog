@@ -1,3 +1,40 @@
+body {
+    background: #f8f8f8;
+    font-family: "Apple LiGothic Medium,Microsoft YaHei", "微软雅黑", "Arial", sans-serif;
+    font-size: 14px;
+    color: #4e4e4e;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+    line-height: 1.8em;
+    position: relative;
+    min-height: 100vh;
+}
+
+body::after {
+    content: '';
+    height: 60px; /* .footer 的高度 */
+    display: block;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    border-radius: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(196, 196, 196, 0.7);
+}
+
+/* ------------ layui重写 ------------ */
+
+@media screen and (min-width: 1400px) {
+    .layui-container {
+        width: 1170px !important;
+    }
+}
+
 /* ------------ 头部样式 ------------ */
 .header {
     width: 100%;
@@ -74,4 +111,18 @@
     margin-top: 15px;
     position: absolute;
     bottom: 0;
+}
+
+
+/* 富文本编辑器 */
+#editor{
+    margin: 20px;
+}
+
+.ProseMirror{
+    font-size: 15px !important;
+}
+
+.toastui-editor-contents{
+    font-size: 15px !important;
 }

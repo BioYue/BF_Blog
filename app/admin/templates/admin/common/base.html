@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('blog.static', filename='layui/css/layui.css') }}">
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='css/admin.css') }}">
     <script type="text/javascript" src="{{ url_for('blog.static', filename='layui/layui.js') }}"></script>
+    {% block head %}{% endblock %}
 </head>
 <body>
 {% block body %}

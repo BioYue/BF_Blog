@@ -1,0 +1,31 @@
+{% extends 'admin/common/base.html' %}
+{% block title %}
+    文章编辑 - 北枫小站
+{% endblock %}
+{% block main_title %}
+    文章编辑
+{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/toastui-editor.min.css') }}">
+    <script type="text/javascript"
+            src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-all.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('admin.static', filename='editor/latest/zh-cn.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <form action="">
+        <div class="layui-row">
+            <div class="layui-row layui"></div>
+        </div>
+    </form>
+    <div id="editor"></div>
+    <script>
+        let editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            initialEditType: 'markdown', // 初始编辑类型，这里是 Markdown
+            previewStyle: 'vertical', // 预览样式，可以是 'tab', 'vertical'
+            height: '700px', // 编辑器高度,
+            language: 'zh-CN'   // 设置语言为中文
+        });
+    </script>
+{% endblock %}

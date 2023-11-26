@@ -63,6 +63,7 @@
                                 elem: '#ID-colorpicker-demo-form',
                                 color: '#1c97f5',
                                 done: function (color) {
+                                    console.log(color)
                                     $('#ID-colorpicker-demo-form-color').val(color);
                                 }
                             });
@@ -92,7 +93,9 @@
                     [   //标题栏
                         {field: 'id', title: '序号', width: 120, sort: true},
                         {field: 'name', title: '分类名称', width: 180},
-                        {field: 'color', title: '分类颜色', width: 180},
+                        {field: 'color', title: '分类颜色', width: 180, templet: (d)=>{
+                                return '<div style="height:100px; width:100%; background-color:' + d.color + '"></div>'
+                            }},
                         {field: 'add_time', title: '创建时间', minWidth: 120},
                         {field: 'upd_time', title: '修改时间', width: 120}
                     ]
@@ -100,8 +103,8 @@
                 //skin: 'line', // 表格风格
                 //even: true,
                 page: true, // 是否显示分页
-                limits: [5, 10, 15],
-                limit: 5 // 每页默认显示的数量
+                limits: [10, 20, 30],
+                limit: 10, // 每页默认显示的数量
             });
         });
     </script>
