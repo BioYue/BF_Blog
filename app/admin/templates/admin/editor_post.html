@@ -1,10 +1,13 @@
 {% extends 'admin/common/base.html' %}
+
 {% block title %}
     文章编辑 - 北枫小站
 {% endblock %}
+
 {% block main_title %}
     文章编辑
 {% endblock %}
+
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/toastui-editor.min.css') }}">
     <script type="text/javascript"
@@ -12,15 +15,45 @@
     <script type="text/javascript"
             src="{{ url_for('admin.static', filename='editor/latest/zh-cn.js') }}"></script>
 {% endblock %}
+
 {% block content %}
-    <form action="">
-        <div class="layui-row">
-            <div class="layui-row layui"></div>
+    <form class="layui-form head_form">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md8">
+                <input type="text" name="post_title" value="" placeholder="请输入文章标题" lay-verify="required"
+                       lay-reqtext="请输入文章标题" lay-affix="clear" class="layui-input">
+            </div>
+            <div class="layui-col-md1">
+                <select name="category" lay-filter="category-select-filter">
+                    <option value="">选择标签</option>
+                    {% for category in category_list %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="layui-col-md1">
+                <select name="tag" lay-filter="tag-select-filter">
+                    <option value="">选择标签</option>
+                    {% for tag in tag_list %}
+                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="layui-col-md2">
+                <div class="header_btn">
+                    <button type="button" lay-filter="saveDraft" lay-submit class="layui-btn">保存草稿</button>
+                    <button type="button" lay-filter="publish" lay-submit class="layui-btn layui-bg-blue">发部文章
+                    </button>
+                </div>
+            </div>
         </div>
     </form>
     <div id="editor"></div>
-    <script>
 
+{% endblock %}
+
+{% block script %}
+    <script>
         let editor = new toastui.Editor({
             el: document.querySelector('#editor'),
             initialEditType: 'markdown', // 初始编辑类型，这里是 Markdown
@@ -28,5 +61,40 @@
             height: '700px', // 编辑器高度,
             language: 'zh-CN'   // 设置语言为中文
         });
+
+        layui.use('form', () => {
+            let form = layui.form;
+            let layer = layui.layer;
+            let $ = layui.$;
+
+            // 监听发部文章按钮点击事件
+            form.on('submit(publish)', (data) => {
+                let title = data.field.post_title
+                let category = data.field.category
+                let tag = data.field.tag
+                let html = editor.getHTML()
+                let markdown = editor.getMarkdown()
+                let form_data = {
+                    title: title,
+                    category: category,
+                    tag: tag,
+                    html: html,
+                    markdown: markdown,
+                }
+                let value =2
+                $.post('{{ url_for('admin.post_add') }}',form_data , (res) => {
+                        console.log(res)
+                    }
+                )
+                return false; // 阻止表单跳转
+            });
+
+            // 监听保存草稿按钮点击事件
+            form.on('submit(saveDraft)', (data) => {
+                console.log('保存草稿')
+                return false;   // 阻止表单跳转
+            })
+        })
+
     </script>
-{% endblock %}
+{% endblock script %}

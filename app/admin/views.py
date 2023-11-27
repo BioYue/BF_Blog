@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
 from .models import User
-from app.blog.models import Category, Tag
+from app.blog.models import Category, Tag, Post
 from start import db
 
 # 实例化蓝图
@@ -34,7 +34,27 @@ def editor_post():
     文章管理-编辑文章页
     :return:
     """
-    return render_template('admin/editor_post.html')
+    category_list = Category.query.all()
+    tag_list = Tag.query.all()
+    return render_template('admin/editor_post.html', **locals())
+
+
+@bp.route('/post_add', methods=['post'])
+def post_add():
+    """
+    文章管理-新增文章API
+    :return:
+    """
+    form_data = request.form
+    print(form_data)
+    title = form_data['title']
+    category_id = form_data['category']
+    tags = form_data['tag']
+    html = form_data['html']
+    markdown = form_data['markdown']
+    # print(category_id)
+    # Post(title=title, content_md=markdown, content_html=html,)
+    return '333'
 
 
 @bp.route('/category')

@@ -82,13 +82,13 @@ body::after {
 }
 
 /* 头像 */
-.header_avata img{
+.header_avata img {
     width: 35px;
     height: 35px;
     border-radius: 50%;
 }
 
-.header_avata dl,dd{
+.header_avata dl, .header_avata dd {
     border-radius: 8px;
     border: 1px solid #227eaa;
     color: #1f1f1f !important;
@@ -114,15 +114,34 @@ body::after {
 }
 
 
-/* 富文本编辑器 */
-#editor{
-    margin: 20px;
+/* ------------ 富文本编辑器 ------------ */
+#editor {
+    margin: 0 20px 20px;
 }
 
-.ProseMirror{
+.ProseMirror {
     font-size: 15px !important;
 }
 
-.toastui-editor-contents{
+.toastui-editor-contents {
     font-size: 15px !important;
+}
+
+
+/* ------------ 头部表单 ------------ */
+.head_form .layui-row{
+    margin: 10px 20px;
+}
+
+.head_form .header_btn {
+    display: flex;
+    justify-content: space-around;
+}
+
+.head_form .layui-btn{
+    padding: 0 38px;
+}
+
+.head_form .layui-col-md8{
+    padding-left: 0;
 }
