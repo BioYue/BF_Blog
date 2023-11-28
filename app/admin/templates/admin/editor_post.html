@@ -77,6 +77,7 @@
                 hooks: {
                     addImageBlobHook: (blob, callback) => {
                         uploadImage(blob, function (imageUrl) {
+                            console.log(blob)
                             callback(imageUrl); // 将链接传递给编辑器
                         }, function (error) {
                             console.error('图片上传失败：', error);
@@ -86,11 +87,15 @@
             });
 
             function uploadImage(imageBlob, successCallback, errorCallback) {
-                // 实现图片上传逻辑，使用 jQuery 的 AJAX
+                let formData = new FormData();
+                formData.append('file', imageBlob);
+                formData.append('name', imageBlob.name);
+                formData.append('size', imageBlob.size.toString());
+                formData.append('extension', imageBlob.type.split('/').pop());
                 $.ajax({
                     url: '{{ url_for('admin.upload') }}',
                     type: 'POST',
-                    data: imageBlob,
+                    data: formData,
                     processData: false,
                     contentType: false,
                     success: function (data) {

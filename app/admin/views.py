@@ -101,13 +101,14 @@ def upload():
     文章管理-资源上传API
     :return:
     """
-    file = request.data
-    filename = 'uploaded_image.png'
-    file_url = BASE_DIR / f'app/blog/static/upload/{filename}'
-    print(file_url)
-    with open(file_url, 'wb') as f:
-        f.write(file)
-    return {'url': url_for('blog.static', filename=f'upload/{filename}')}
+    # file = request.data
+    file = request.files.get('file')
+    name = request.form.get('name')
+    size = request.form.get('size')
+    extension = request.form.get('extension')
+    file.save(BASE_DIR / f'app/blog/static/upload/{name}')
+
+    return {'url': url_for('blog.static', filename=f'upload/{name}')}
 
 
 @bp.route('/category')
@@ -217,3 +218,10 @@ def tag_query():
         'msg': ''
     }
     return jsonify(data)
+
+
+@bp.route('/test_url')
+def test_url():
+    html = Post.query.get(5).content_html
+    print(html)
+    return html
