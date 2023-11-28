@@ -145,3 +145,8 @@ body::after {
 .head_form .layui-col-md8{
     padding-left: 0;
 }
+
+/* ------------ 文章编辑页面弹出层样式 ------------ */
+.layui-layer-content{
+    overflow: hidden !important;
+}

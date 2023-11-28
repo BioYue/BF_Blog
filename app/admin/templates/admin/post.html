@@ -7,6 +7,7 @@
 {% endblock %}
 {% block content %}
     <div class="layui-container">
+        <a class="button layui-btn" href="{{ url_for('admin.editor_post') }}">新增文章</a>
         <table class="layui-hide" id="ID-table-demo-data"></table>
     </div>
 {% endblock %}
@@ -14,82 +15,31 @@
     <script>
         layui.use('table', function () {
             let table = layui.table;
+            let $ = layui.$;
+            let layer = layui.layer;
+            let util = layui.util;
+
+
 
             // 已知数据渲染
             let inst = table.render({
                 elem: '#ID-table-demo-data',
+                url: '{{ url_for("admin.post_query") }}',
                 cols: [[ //标题栏
-                    {field: 'id', title: 'ID', width: 80, sort: true},
-                    {field: 'username', title: '用户', width: 120},
-                    {field: 'sign', title: '签名', minWidth: 160},
-                    {field: 'sex', title: '性别', width: 80},
-                    {field: 'city', title: '城市', width: 100},
-                    {field: 'experience', title: '积分', width: 80, sort: true}
+                    {field: 'id', title: '序号', width: 120, sort: true},
+                    {field: 'title', title: '文章标题', width: ''},
+                    {field: 'read_count', title: '阅读次数', width: 180},
+                    {field: 'category', title: '文章分类', width: 180},
+                    {field: 'add_time', title: '创建时间', width: 180},
+                    {field: 'upd_time', title: '修改时间', width: 180}
                 ]],
-                data: [{ // 赋值已知数据
-                    "id": "10001",
-                    "username": "张三1",
-                    "sex": "男",
-                    "city": "浙江杭州",
-                    "sign": "人生恰似一场修行",
-                    "experience": "116"
-                }, {
-                    "id": "10002",
-                    "username": "张三2",
-                    "sex": "男",
-                    "city": "浙江杭州",
-                    "sign": "人生恰似一场修行",
-                    "experience": "12",
-                    "LAY_CHECKED": true
-                }, {
-                    "id": "10003",
-                    "username": "张三3",
-                    "sex": "男",
-                    "city": "浙江杭州",
-                    "sign": "人生恰似一场修行",
-                    "experience": "65"
-                }, {
-                    "id": "10004",
-                    "username": "张三4",
-                    "sex": "男",
-                    "city": "浙江杭州",
-                    "sign": "人生恰似一场修行",
-                    "experience": "777"
-                }, {
-                    "id": "10005",
-                    "username": "张三5",
-                    "sex": "男",
-                    "city": "浙江杭州",
-                    "sign": "人生恰似一场修行",
-                    "experience": "86"
-                }, {
-                    "id": "10006",
-                    "username": "张三6",
-                    "sex": "男",
-                    "city": "浙江杭州",
-                    "sign": "人生恰似一场修行",
-                    "experience": "12"
-                }, {
-                    "id": "10007",
-                    "username": "张三7",
-                    "sex": "男",
-                    "city": "浙江杭州",
-                    "sign": "人生恰似一场修行",
-                    "experience": "16"
-                }, {
-                    "id": "10008",
-                    "username": "张三8",
-                    "sex": "男",
-                    "city": "浙江杭州",
-                    "sign": "人生恰似一场修行",
-                    "experience": "106"
-                }],
-                //skin: 'line', // 表格风格
-                //even: true,
                 page: true, // 是否显示分页
-                limits: [5, 10, 15],
-                limit: 5 // 每页默认显示的数量
+                limits: [10, 20, 30],
+                limit: 10 // 每页默认显示的数量
             });
+
+            inst.resize();
+            inst.setColsWidth();
         });
     </script>
 {% endblock %}

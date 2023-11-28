@@ -17,39 +17,45 @@
 {% endblock %}
 
 {% block content %}
-    <form class="layui-form head_form">
+    <form class="layui-form head_form" lay-filter="filter-test-layer">
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-md8">
+            <div class="layui-col-md9">
                 <input type="text" name="post_title" value="" placeholder="请输入文章标题" lay-verify="required"
                        lay-reqtext="请输入文章标题" lay-affix="clear" class="layui-input">
             </div>
             <div class="layui-col-md1">
                 <select name="category" lay-filter="category-select-filter">
-                    <option value="">选择标签</option>
+                    <option value="">选择分类</option>
                     {% for category in category_list %}
                         <option value="{{ category.id }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="layui-col-md1">
-                <select name="tag" lay-filter="tag-select-filter">
-                    <option value="">选择标签</option>
-                    {% for tag in tag_list %}
-                        <option value="{{ tag.id }}">{{ tag.name }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="layui-col-md2">
                 <div class="header_btn">
                     <button type="button" lay-filter="saveDraft" lay-submit class="layui-btn">保存草稿</button>
-                    <button type="button" lay-filter="publish" lay-submit class="layui-btn layui-bg-blue">发部文章
-                    </button>
+                    <button type="button" lay-on="test-page-custom" class="layui-btn layui-bg-blue">发布文章</button>
                 </div>
             </div>
         </div>
     </form>
     <div id="editor"></div>
+    <script type="text/html" id="post-template">
+        <form class="layui-form" style="margin: 16px;">
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签(非必填)</label>
+                <div class="layui-input-block">
+                    {% for tag in tag_list %}
+                        <input type="checkbox" name="{{ tag.id }}" title="{{ tag.name }}">
+                    {% endfor %}
+                </div>
+            </div>
 
+            <div style="display: flex;justify-content: flex-end; padding:0 30px 30px 0">
+                <button type="button" lay-filter="publish" lay-submit class="layui-btn layui-bg-blue">发布文章</button>
+            </div>
+        </form>
+    </script>
 {% endblock %}
 
 {% block script %}
@@ -62,32 +68,61 @@
             language: 'zh-CN'   // 设置语言为中文
         });
 
-        layui.use('form', () => {
-            let form = layui.form;
-            let layer = layui.layer;
-            let $ = layui.$;
 
-            // 监听发部文章按钮点击事件
-            form.on('submit(publish)', (data) => {
-                let title = data.field.post_title
-                let category = data.field.category
-                let tag = data.field.tag
-                let html = editor.getHTML()
-                let markdown = editor.getMarkdown()
-                let form_data = {
-                    title: title,
-                    category: category,
-                    tag: tag,
-                    html: html,
-                    markdown: markdown,
-                }
-                let value =2
-                $.post('{{ url_for('admin.post_add') }}',form_data , (res) => {
-                        console.log(res)
+        layui.use(() => {
+            let $ = layui.$;
+            let layer = layui.layer;
+            let util = layui.util;
+            let form = layui.form;
+
+            util.on('lay-on', {
+                'test-page-custom': () => {
+                    // 判断是否输入了文章标题
+                    let title = form.val('filter-test-layer').post_title
+                    if (title.trim() === '') {
+                        layer.msg('请输入文章标题', {icon: 7, time: 1500, anim: 6});
+                        return;
                     }
-                )
-                return false; // 阻止表单跳转
-            });
+                    layer.open({
+                        type: 1,
+                        area: ['600px', 'auto'],
+                        resize: false,
+                        shadeClose: true,
+                        title: '发布文章',
+                        offset: 'auto',
+                        content: $('#post-template').html(),
+                        success: function () {
+                            // 对弹层中的表单进行初始化渲染
+                            form.render();
+                            form.on('submit(publish)', function (data) {
+                                let tags = data.field;
+                                let category = form.val('filter-test-layer').category || "{{ category_list[0].id }}";
+                                let html = editor.getHTML()
+                                let markdown = editor.getMarkdown()
+                                let form_data = {
+                                    title: title,
+                                    category: category,
+                                    tags: JSON.stringify(tags),
+                                    html: html,
+                                    markdown: markdown,
+                                }
+                                $.post('{{ url_for('admin.post_add') }}', form_data, (res) => {
+                                        if (res === 'success') {
+                                            layer.close(1, () => {
+                                                layer.msg('保存成功', {icon: 1, time: 1500}, () => {
+                                                    window.location.href = '{{ url_for('admin.post') }}';
+                                                });
+                                            });
+                                        }
+                                    }
+                                )
+                                return false; // 阻止默认 form 跳转
+                            });
+                        }
+                    })
+                }
+            })
+
 
             // 监听保存草稿按钮点击事件
             form.on('submit(saveDraft)', (data) => {

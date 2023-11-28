@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from .models import User
 from app.blog.models import Category, Tag, Post
 from start import db
+import json
 
 # 实例化蓝图
 bp = Blueprint('admin', __name__, url_prefix='/bf_admin', template_folder='templates', static_folder='static')
@@ -46,15 +47,45 @@ def post_add():
     :return:
     """
     form_data = request.form
-    print(form_data)
-    title = form_data['title']
-    category_id = form_data['category']
-    tags = form_data['tag']
-    html = form_data['html']
-    markdown = form_data['markdown']
-    # print(category_id)
-    # Post(title=title, content_md=markdown, content_html=html,)
-    return '333'
+    tags = json.loads(form_data['tags'])
+    tags_obj = [Tag.query.get(tag_id) for tag_id in list(tags.keys())]
+    post_obj = Post(
+        title=form_data['title'],
+        content_md=form_data['markdown'],
+        content_html=form_data['html'],
+        category_id=form_data['category'],
+        tags=tags_obj
+    )
+    db.session.add(post_obj)
+    db.session.commit()
+    return 'success'
+
+
+@bp.route('/post_query')
+def post_query():
+    page = request.args.get('page', type=int, default=1)  # 当前页
+    limit = request.args.get('limit', type=int, default=10)  # 一页条数
+    post_pg = Post.query.paginate(page=page, per_page=limit)
+
+    post_list = []
+    for item in post_pg.items:
+        row = {
+            'id': item.id,
+            'title': item.title,
+            'read_count': item.read_count,
+            'category': item.category.name,
+            'add_time': item.add_time.strftime("%Y-%m-%d"),
+            'upd_time': item.upd_time.strftime("%Y-%m-%d")
+        }
+        post_list.append(row)
+
+    data = {
+        'code': 0,
+        'data': post_list,  # 实际数据
+        'count': post_pg.total,  # 数据总数
+        'msg': ''
+    }
+    return jsonify(data)
 
 
 @bp.route('/category')
