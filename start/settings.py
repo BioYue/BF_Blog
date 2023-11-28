@@ -1,6 +1,9 @@
 """
 项目配置
 """
+from pathlib import Path
+# 基础路径
+BASE_DIR = Path(__file__).resolve().parent.parent
 # 开启调试模式
 DEBUG = True
 # 定义密钥  https://password.buyaocha.com/ 密钥生成

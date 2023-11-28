@@ -1,8 +1,11 @@
+import os.path
+
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
 from .models import User
 from app.blog.models import Category, Tag, Post
 from start import db
 import json
+from start.settings import BASE_DIR
 
 # 实例化蓝图
 bp = Blueprint('admin', __name__, url_prefix='/bf_admin', template_folder='templates', static_folder='static')
@@ -63,6 +66,10 @@ def post_add():
 
 @bp.route('/post_query')
 def post_query():
+    """
+    文章管理-查询文章API
+    :return:
+    """
     page = request.args.get('page', type=int, default=1)  # 当前页
     limit = request.args.get('limit', type=int, default=10)  # 一页条数
     post_pg = Post.query.paginate(page=page, per_page=limit)
@@ -86,6 +93,21 @@ def post_query():
         'msg': ''
     }
     return jsonify(data)
+
+
+@bp.route('/upload', methods=['post'])
+def upload():
+    """
+    文章管理-资源上传API
+    :return:
+    """
+    file = request.data
+    filename = 'uploaded_image.png'
+    file_url = BASE_DIR / f'app/blog/static/upload/{filename}'
+    print(file_url)
+    with open(file_url, 'wb') as f:
+        f.write(file)
+    return {'url': url_for('blog.static', filename=f'upload/{filename}')}
 
 
 @bp.route('/category')

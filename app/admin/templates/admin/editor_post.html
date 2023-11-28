@@ -60,20 +60,52 @@
 
 {% block script %}
     <script>
-        let editor = new toastui.Editor({
-            el: document.querySelector('#editor'),
-            initialEditType: 'markdown', // 初始编辑类型，这里是 Markdown
-            previewStyle: 'vertical', // 预览样式，可以是 'tab', 'vertical'
-            height: '700px', // 编辑器高度,
-            language: 'zh-CN'   // 设置语言为中文
-        });
-
-
         layui.use(() => {
             let $ = layui.$;
             let layer = layui.layer;
             let util = layui.util;
             let form = layui.form;
+
+
+            let editor = new toastui.Editor({
+                el: document.querySelector('#editor'),
+                initialEditType: 'markdown', // 初始编辑类型，这里是 Markdown
+                previewStyle: 'vertical', // 预览样式，可以是 'tab', 'vertical'
+                height: '700px', // 编辑器高度,
+                language: 'zh-CN',   // 设置语言为中文
+
+                hooks: {
+                    addImageBlobHook: (blob, callback) => {
+                        uploadImage(blob, function (imageUrl) {
+                            callback(imageUrl); // 将链接传递给编辑器
+                        }, function (error) {
+                            console.error('图片上传失败：', error);
+                        });
+                    },
+                }
+            });
+
+            function uploadImage(imageBlob, successCallback, errorCallback) {
+                // 实现图片上传逻辑，使用 jQuery 的 AJAX
+                $.ajax({
+                    url: '{{ url_for('admin.upload') }}',
+                    type: 'POST',
+                    data: imageBlob,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.url !== '') {
+                            successCallback(data.url);
+                        } else {
+                            errorCallback('图片上传失败');
+                        }
+                    },
+                    error: function () {
+                        errorCallback('图片上传失败');
+                    }
+                });
+            }
+
 
             util.on('lay-on', {
                 'test-page-custom': () => {
@@ -129,6 +161,8 @@
                 console.log('保存草稿')
                 return false;   // 阻止表单跳转
             })
+
+
         })
 
     </script>
