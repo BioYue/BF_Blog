@@ -2,10 +2,12 @@ import os.path
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
 from .models import User
-from app.blog.models import Category, Tag, Post
+from app.blog.models import Category, Tag, Post, Attachment
 from start import db
 import json
 from start.settings import BASE_DIR
+import uuid
+from flask import session
 
 # 实例化蓝图
 bp = Blueprint('admin', __name__, url_prefix='/bf_admin', template_folder='templates', static_folder='static')
@@ -40,6 +42,8 @@ def editor_post():
     """
     category_list = Category.query.all()
     tag_list = Tag.query.all()
+    file_token = uuid.uuid4()
+    session['file_token'] = file_token
     return render_template('admin/editor_post.html', **locals())
 
 
@@ -52,6 +56,7 @@ def post_add():
     form_data = request.form
     tags = json.loads(form_data['tags'])
     tags_obj = [Tag.query.get(tag_id) for tag_id in list(tags.keys())]
+
     post_obj = Post(
         title=form_data['title'],
         content_md=form_data['markdown'],
@@ -60,6 +65,12 @@ def post_add():
         tags=tags_obj
     )
     db.session.add(post_obj)
+    db.session.flush()
+
+    file_list = Attachment.query.filter_by(file_token=form_data['token']).all()
+    for file in file_list:
+        file.post_id = post_obj.id
+
     db.session.commit()
     return 'success'
 
@@ -105,9 +116,12 @@ def upload():
     file = request.files.get('file')
     name = request.form.get('name')
     size = request.form.get('size')
-    extension = request.form.get('extension')
-    file.save(BASE_DIR / f'app/blog/static/upload/{name}')
-
+    token = request.form.get('token')
+    file_path = f'app/blog/static/upload/{name}'
+    file.save(BASE_DIR / file_path)
+    attachment = Attachment(file_name=name, file_size=size, file_path=file_path, file_token=token)
+    db.session.add(attachment)
+    db.session.commit()
     return {'url': url_for('blog.static', filename=f'upload/{name}')}
 
 
@@ -222,6 +236,6 @@ def tag_query():
 
 @bp.route('/test_url')
 def test_url():
-    html = Post.query.get(5).content_html
+    html = Post.query.get(8).content_html
     print(html)
-    return html
+    return render_template('admin/test.html', **locals())

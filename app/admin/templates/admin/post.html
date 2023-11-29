@@ -20,18 +20,17 @@
             let util = layui.util;
 
 
-
             // 已知数据渲染
             let inst = table.render({
                 elem: '#ID-table-demo-data',
                 url: '{{ url_for("admin.post_query") }}',
                 cols: [[ //标题栏
-                    {field: 'id', title: '序号', width: 120, sort: true},
-                    {field: 'title', title: '文章标题', width: ''},
-                    {field: 'read_count', title: '阅读次数', width: 180},
-                    {field: 'category', title: '文章分类', width: 180},
-                    {field: 'add_time', title: '创建时间', width: 180},
-                    {field: 'upd_time', title: '修改时间', width: 180}
+                    {field: 'id', title: '序号', width: 120, sort: true, align: 'center'},
+                    {field: 'title', title: '文章标题', width: '', align: 'center'},
+                    {field: 'read_count', title: '阅读次数', width: 180, align: 'center'},
+                    {field: 'category', title: '文章分类', width: 180, align: 'center'},
+                    {field: 'add_time', title: '创建时间', width: 180, align: 'center'},
+                    {field: 'upd_time', title: '修改时间', width: 180, align: 'center'}
                 ]],
                 page: true, // 是否显示分页
                 limits: [10, 20, 30],

@@ -10,6 +10,8 @@
     <orderEntry type="library" name="toastui-editor" level="application" />
     <orderEntry type="library" name="toastui-editor-all" level="application" />
     <orderEntry type="library" name="zh-cn" level="application" />
+    <orderEntry type="library" name="toastui-editor-plugin-code-syntax-highlight-all" level="application" />
+    <orderEntry type="library" name="toastui-editor-plugin-code-syntax-highlight" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />

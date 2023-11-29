@@ -98,5 +98,6 @@ class Attachment(BaseModel):
     file_name = db.Column(db.String(512), comment='文件名')
     file_size = db.Column(db.String(32), comment='文件大小')
     file_path = db.Column(db.String(256), comment='文件路径')
+    file_token = db.Column(db.String(36), comment='uuid临时标识')
     post_id = db.Column(db.Integer, db.ForeignKey('post_db.id'), comment='文章id')
     note_id = db.Column(db.Integer, db.ForeignKey('note_db.id'), comment='笔记id')

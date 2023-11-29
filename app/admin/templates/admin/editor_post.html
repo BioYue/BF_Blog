@@ -12,8 +12,10 @@
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/toastui-editor.min.css') }}">
     <script type="text/javascript"
             src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-all.min.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ url_for('admin.static', filename='editor/latest/zh-cn.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/latest/zh-cn.js') }}"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.css"/>
 {% endblock %}
 
 {% block content %}
@@ -56,6 +58,7 @@
             </div>
         </form>
     </script>
+    <script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
 {% endblock %}
 
 {% block script %}
@@ -66,13 +69,14 @@
             let util = layui.util;
             let form = layui.form;
 
-
             let editor = new toastui.Editor({
                 el: document.querySelector('#editor'),
                 initialEditType: 'markdown', // 初始编辑类型，这里是 Markdown
                 previewStyle: 'vertical', // 预览样式，可以是 'tab', 'vertical'
                 height: '700px', // 编辑器高度,
                 language: 'zh-CN',   // 设置语言为中文
+                theme: 'dark',
+                plugins: [toastui.Editor.plugin.codeSyntaxHighlight],
 
                 hooks: {
                     addImageBlobHook: (blob, callback) => {
@@ -91,7 +95,7 @@
                 formData.append('file', imageBlob);
                 formData.append('name', imageBlob.name);
                 formData.append('size', imageBlob.size.toString());
-                formData.append('extension', imageBlob.type.split('/').pop());
+                formData.append('token', '{{ file_token }}');
                 $.ajax({
                     url: '{{ url_for('admin.upload') }}',
                     type: 'POST',
@@ -142,6 +146,7 @@
                                     tags: JSON.stringify(tags),
                                     html: html,
                                     markdown: markdown,
+                                    token: '{{ file_token }}'
                                 }
                                 $.post('{{ url_for('admin.post_add') }}', form_data, (res) => {
                                         if (res === 'success') {
