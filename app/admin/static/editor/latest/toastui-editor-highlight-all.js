@@ -190,7 +190,7 @@ Prism.languages.ada = {
 			pattern: /"(?:\\(?:\r\n|[\s\S])|[^\\\r\n"])*"/,
 			greedy: true,
 		},
-		'punctuation': /[(){}猞冣.;@]/,
+		'punctuation': /[(){}⦃⦄.;@]/,
 		'class-name': {
 			pattern: /((?:data|record) +)\S+/,
 			lookbehind: true,
@@ -200,7 +200,7 @@ Prism.languages.ada = {
 			lookbehind: true,
 		},
 		'operator': {
-			pattern: /(^\s*|\s)(?:[=|:鈭€鈫捨籠\?_]|->)(?=\s)/,
+			pattern: /(^\s*|\s)(?:[=|:∀→λ\\?_]|->)(?=\s)/,
 			lookbehind: true,
 		},
 		'keyword': /\b(?:Set|abstract|constructor|data|eta-equality|field|forall|forall|hiding|import|in|inductive|infix|infixl|infixr|instance|let|macro|module|mutual|no-eta-equality|open|overlap|pattern|postulate|primitive|private|public|quote|quoteContext|quoteGoal|quoteTerm|record|renaming|rewrite|syntax|tactic|unquote|unquoteDecl|unquoteDef|using|variable|where|with)\b/,
@@ -444,34 +444,34 @@ Prism.languages.apacheconf = {
 /***/ (function() {
 
 Prism.languages.apl = {
-	'comment': /(?:鈲潀#[! ]).*$/m,
+	'comment': /(?:⍝|#[! ]).*$/m,
 	'string': {
 		pattern: /'(?:[^'\r\n]|'')*'/,
 		greedy: true
 	},
-	'number': /炉?(?:\d*\.?\b\d+(?:e[+炉]?\d+)?|炉|鈭�)(?:j炉?(?:(?:\d+(?:\.\d+)?|\.\d+)(?:e[+炉]?\d+)?|炉|鈭�))?/i,
+	'number': /¯?(?:\d*\.?\b\d+(?:e[+¯]?\d+)?|¯|∞)(?:j¯?(?:(?:\d+(?:\.\d+)?|\.\d+)(?:e[+¯]?\d+)?|¯|∞))?/i,
 	'statement': /:[A-Z][a-z][A-Za-z]*\b/,
 	'system-function': {
-		pattern: /鈳昜A-Z]+/i,
+		pattern: /⎕[A-Z]+/i,
 		alias: 'function'
 	},
-	'constant': /[鈲尵#鈳曗崬]/,
-	'function': /[-+脳梅鈱堚寠鈭鈲斥嵏?*鈲熲棆!鈱�<鈮�=>鈮モ墵鈮♀墷鈭娾嵎鈭埄~鈭ㄢ埀鈲扁嵅鈲�,鈲尳鈯栤崏鈫戔啌鈯傗妰鈯嗏妵鈱封崑鈲掆姢鈯モ崟鈲庘姡鈯⑩崄鈲傗増鈲啑陇鈫抅/,
+	'constant': /[⍬⌾#⎕⍞]/,
+	'function': /[-+×÷⌈⌊∣|⍳⍸?*⍟○!⌹<≤=>≥≠≡≢∊⍷∪∩~∨∧⍱⍲⍴,⍪⌽⊖⍉↑↓⊂⊃⊆⊇⌷⍋⍒⊤⊥⍕⍎⊣⊢⍁⍂≈⍯↗¤→]/,
 	'monadic-operator': {
-		pattern: /[\\\/鈱库崁篓鈲ㄢ尪&鈭/,
+		pattern: /[\\\/⌿⍀¨⍨⌶&∥]/,
 		alias: 'operator'
 	},
 	'dyadic-operator': {
-		pattern: /[.鈲ｂ崰鈲も垬鈱窣鈱衡崶]/,
+		pattern: /[.⍣⍠⍤∘⌸@⌺⍥]/,
 		alias: 'operator'
 	},
 	'assignment': {
-		pattern: /鈫�/,
+		pattern: /←/,
 		alias: 'keyword'
 	},
-	'punctuation': /[\[;\]()鈼団媱]/,
+	'punctuation': /[\[;\]()◇⋄]/,
 	'dfn': {
-		pattern: /[{}鈲衡嵉鈲垛嵐鈭団崼:]/,
+		pattern: /[{}⍺⍵⍶⍹∇⍫:]/,
 		alias: 'builtin'
 	}
 };
@@ -492,7 +492,7 @@ Prism.languages.applescript = {
 	'string': /"(?:\\.|[^"\\\r\n])*"/,
 	'number': /(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e-?\d+)?\b/i,
 	'operator': [
-		/[&=鈮犫墹鈮�*+\-\/梅^]|[<>]=?/,
+		/[&=≠≤≥*+\-\/÷^]|[<>]=?/,
 		/\b(?:(?:start|begin|end)s? with|(?:(?:does not|doesn't) contain|contains?)|(?:is|isn't|is not) (?:in|contained by)|(?:(?:is|isn't|is not) )?(?:greater|less) than(?: or equal)?(?: to)?|(?:(?:does not|doesn't) come|comes) (?:before|after)|(?:is|isn't|is not) equal(?: to)?|(?:(?:does not|doesn't) equal|equals|equal to|isn't|is not)|(?:a )?(?:ref(?: to)?|reference to)|(?:and|or|div|mod|as|not))\b/
 	],
 	'keyword': /\b(?:about|above|after|against|apart from|around|aside from|at|back|before|beginning|behind|below|beneath|beside|between|but|by|considering|continue|copy|does|eighth|else|end|equal|error|every|exit|false|fifth|first|for|fourth|from|front|get|given|global|if|ignoring|in|instead of|into|is|it|its|last|local|me|middle|my|ninth|of|on|onto|out of|over|prop|property|put|repeat|return|returning|second|set|seventh|since|sixth|some|tell|tenth|that|the|then|third|through|thru|timeout|times|to|transaction|true|try|until|where|while|whose|with|without)\b/,
@@ -500,7 +500,7 @@ Prism.languages.applescript = {
 		pattern: /\b(?:alias|application|boolean|class|constant|date|file|integer|list|number|POSIX file|real|record|reference|RGB color|script|text|centimetres|centimeters|feet|inches|kilometres|kilometers|metres|meters|miles|yards|square feet|square kilometres|square kilometers|square metres|square meters|square miles|square yards|cubic centimetres|cubic centimeters|cubic feet|cubic inches|cubic metres|cubic meters|cubic yards|gallons|litres|liters|quarts|grams|kilograms|ounces|pounds|degrees Celsius|degrees Fahrenheit|degrees Kelvin)\b/,
 		alias: 'builtin'
 	},
-	'punctuation': /[{}():,卢芦禄銆娿€媇/
+	'punctuation': /[{}():,¬«»《》]/
 };
 
 
@@ -512,12 +512,12 @@ Prism.languages.applescript = {
 Prism.languages.aql = {
 	'comment': /\/\/.*|\/\*[\s\S]*?\*\//,
 	'property': {
-		pattern: /([{,]\s*)(?:(?!\d)\w+|(["'麓`])(?:(?!\2)[^\\\r\n]|\\.)*\2)(?=\s*:)/,
+		pattern: /([{,]\s*)(?:(?!\d)\w+|(["'´`])(?:(?!\2)[^\\\r\n]|\\.)*\2)(?=\s*:)/,
 		lookbehind: true,
 		greedy: true
 	},
 	'string': {
-		pattern: /(["'麓`])(?:(?!\1)[^\\\r\n]|\\.)*\1/,
+		pattern: /(["'´`])(?:(?!\1)[^\\\r\n]|\\.)*\1/,
 		greedy: true
 	},
 	'variable': /@@?\w+/,
@@ -1080,7 +1080,7 @@ Prism.languages.autoit = {
 			// a) function foo {
 			// b) foo() {
 			// c) function foo() {
-			// but not 鈥渇oo {鈥�
+			// but not “foo {”
 			{
 				// a) and c)
 				pattern: /(\bfunction\s+)\w+(?=(?:\s*\(?:\s*\))?\s*\{)/,
@@ -1100,7 +1100,7 @@ Prism.languages.autoit = {
 			lookbehind: true
 		},
 		// Highlight variable names as variables in the left-hand part
-		// of assignments (鈥�=鈥� and 鈥�+=鈥�).
+		// of assignments (“=” and “+=”).
 		'assign-left': {
 			pattern: /(^|[\s;|&]|[<>]\()\w+(?=\+?=)/,
 			inside: {
@@ -1122,7 +1122,7 @@ Prism.languages.autoit = {
 				inside: insideString
 			},
 			// Here-document with quotes around the tag
-			// 鈫� No expansion (so no 鈥渋nside鈥�).
+			// → No expansion (so no “inside”).
 			{
 				pattern: /((?:^|[^<])<<-?\s*)(["'])(\w+)\2\s[\s\S]*?(?:\r?\n|\r)\3/,
 				lookbehind: true,
@@ -1131,7 +1131,7 @@ Prism.languages.autoit = {
 					'bash': commandAfterHeredoc
 				}
 			},
-			// 鈥淣ormal鈥� string
+			// “Normal” string
 			{
 				pattern: /(^|[^\\](?:\\\\)*)(["'])(?:\\[\s\S]|\$\([^)]+\)|\$(?!\()|`[^`]+`|(?!\2)[^\\`$])*\2/,
 				lookbehind: true,
@@ -1624,13 +1624,13 @@ Prism.languages.bro = {
 Prism.languages.bsl = {
 	'comment': /\/\/.*/,
 	'string': [
-		// 小褌褉芯泻懈
+		// Строки
 		// Strings
 		{
 			pattern: /"(?:[^"]|"")*"(?!")/,
 			greedy: true
 		},
-		// 袛邪褌邪 懈 胁褉械屑褟
+		// Дата и время
 		// Date & time
 		{
 			pattern: /'(?:[^'\r\n\\]|\\.)*'/
@@ -1639,7 +1639,7 @@ Prism.languages.bsl = {
 	'keyword': [
 		{
 			// RU
-			pattern: /(^|[^\w\u0400-\u0484\u0487-\u052f\u1c80-\u1c88\u1d2b\u1d78\u2de0-\u2dff\ua640-\ua69f\ufe2e\ufe2f])(?:锌芯泻邪|写谢褟|薪芯胁褘泄|锌褉械褉胁邪褌褜|锌芯锌褘褌泻邪|懈褋泻谢褞褔械薪懈械|胁褘蟹胁邪褌褜懈褋泻谢褞褔械薪懈械|懈薪邪褔械|泻芯薪械褑锌芯锌褘褌泻懈|薪械芯锌褉械写械谢械薪芯|褎褍薪泻褑懈褟|锌械褉械屑|胁芯蟹胁褉邪褌|泻芯薪械褑褎褍薪泻褑懈懈|械褋谢懈|懈薪邪褔械械褋谢懈|锌褉芯褑械写褍褉邪|泻芯薪械褑锌褉芯褑械写褍褉褘|褌芯谐写邪|蟹薪邪褔|褝泻褋锌芯褉褌|泻芯薪械褑械褋谢懈|懈蟹|泻邪卸写芯谐芯|懈褋褌懈薪邪|谢芯卸褜|锌芯|褑懈泻谢|泻芯薪械褑褑懈泻谢邪|胁褘锌芯谢薪懈褌褜)(?![\w\u0400-\u0484\u0487-\u052f\u1c80-\u1c88\u1d2b\u1d78\u2de0-\u2dff\ua640-\ua69f\ufe2e\ufe2f])/i,
+			pattern: /(^|[^\w\u0400-\u0484\u0487-\u052f\u1c80-\u1c88\u1d2b\u1d78\u2de0-\u2dff\ua640-\ua69f\ufe2e\ufe2f])(?:пока|для|новый|прервать|попытка|исключение|вызватьисключение|иначе|конецпопытки|неопределено|функция|перем|возврат|конецфункции|если|иначеесли|процедура|конецпроцедуры|тогда|знач|экспорт|конецесли|из|каждого|истина|ложь|по|цикл|конеццикла|выполнить)(?![\w\u0400-\u0484\u0487-\u052f\u1c80-\u1c88\u1d2b\u1d78\u2de0-\u2dff\ua640-\ua69f\ufe2e\ufe2f])/i,
 			lookbehind: true
 		},
 		{
@@ -1655,7 +1655,7 @@ Prism.languages.bsl = {
 		/[<>+\-*/]=?|[%=]/,
 		// RU
 		{
-			pattern: /(^|[^\w\u0400-\u0484\u0487-\u052f\u1c80-\u1c88\u1d2b\u1d78\u2de0-\u2dff\ua640-\ua69f\ufe2e\ufe2f])(?:懈|懈谢懈|薪械)(?![\w\u0400-\u0484\u0487-\u052f\u1c80-\u1c88\u1d2b\u1d78\u2de0-\u2dff\ua640-\ua69f\ufe2e\ufe2f])/i,
+			pattern: /(^|[^\w\u0400-\u0484\u0487-\u052f\u1c80-\u1c88\u1d2b\u1d78\u2de0-\u2dff\ua640-\ua69f\ufe2e\ufe2f])(?:и|или|не)(?![\w\u0400-\u0484\u0487-\u052f\u1c80-\u1c88\u1d2b\u1d78\u2de0-\u2dff\ua640-\ua69f\ufe2e\ufe2f])/i,
 			lookbehind: true
 		},
 		// EN
@@ -1666,17 +1666,17 @@ Prism.languages.bsl = {
 	],
 	'punctuation': /\(\.|\.\)|[()\[\]:;,.]/,
 	'directive': [
-		// 孝械谐懈 锌褉械锌褉芯褑械褋褋芯褉邪 胁懈写邪 &袣谢懈械薪褌, &小械褉胁械褉, ...
+		// Теги препроцессора вида &Клиент, &Сервер, ...
 		// Preprocessor tags of the type &Client, &Server, ...
 		{
 			pattern: /^(\s*)&.*/m,
 			lookbehind: true,
 			alias: 'important'
 		},
-		// 袠薪褋褌褉褍泻褑懈懈 锌褉械锌褉芯褑械褋褋芯褉邪 胁懈写邪:
-		// #袝褋谢懈 小械褉胁械褉 孝芯谐写邪
+		// Инструкции препроцессора вида:
+		// #Если Сервер Тогда
 		// ...
-		// #袣芯薪械褑袝褋谢懈
+		// #КонецЕсли
 		// Preprocessor instructions of the form:
 		// #If Server Then
 		// ...
@@ -3724,7 +3724,7 @@ Prism.languages['xlsx'] = Prism.languages['xls'] = Prism.languages['excel-formul
 			{
 				/*
 					base prefix floats 0x1.0p3 (8.0) 0b1.010p2 (5.0) 0x1.p1 0b1.11111111p11111...
-					"The normalized hex form 卤0x1.MMMMMMMMMMMMM[pP]卤EEEE allows any floating-point number to be specified precisely.
+					"The normalized hex form ±0x1.MMMMMMMMMMMMM[pP]±EEEE allows any floating-point number to be specified precisely.
 					The values of MMMMMMMMMMMMM and EEEE map directly to the mantissa and exponent fields of the binary IEEE 754 representation."
 					<https://docs.factorcode.org/content/article-syntax-floats.html>
 				*/
@@ -4477,7 +4477,7 @@ Prism.languages.gedcom = {
 			lookbehind: true
 		},
 		'feature': {
-			pattern: /((?:^|\r?\n|\r)[ \t]*)(?:Ability|Ahoy matey!|Arwedd|Aspekt|Besigheid Behoefte|Business Need|Caracteristica|Caracter铆stica|Egenskab|Egenskap|Eiginleiki|Feature|F墨膷a|Fitur|Fonctionnalit茅|Fonksyonalite|Funcionalidade|Funcionalitat|Functionalitate|Func牛ionalitate|Func葲ionalitate|Functionaliteit|Fungsi|Funkcia|Funkcija|Funkcionalit膩te|Funkcionalnost|Funkcja|Funksie|Funktionalit盲t|Funktionalit茅it|Funzionalit脿|Hwaet|Hw忙t|Jellemz艖|Karakteristik|laH|Lastnost|Mak|Mogucnost|Mogu膰nost|Moznosti|Mo啪nosti|OH HAI|Omadus|Ominaisuus|Osobina|脰zellik|perbogh|poQbogh malja'|Potrzeba biznesowa|Po啪adavek|Po啪iadavka|Pretty much|Qap|Qu'meH 'ut|Savyb臈|T铆nh n膬ng|Trajto|Vermo毛|Vlastnos钮|W艂a艣ciwo艣膰|Zna膷ilnost|螖蠀谓伪蟿蠈蟿畏蟿伪|螞蔚喂蟿慰蠀蟻纬委伪|袦芯谐褍褯薪芯褋褌|袦萤屑泻懈薪谢械泻|袨褋芯斜懈薪邪|小胁芯泄褋褌胁芯|耶蟹械薪褔訖谢械泻谢械谢械泻|肖褍薪泻褑懈芯薪邪谢|肖褍薪泻褑懈芯薪邪谢薪芯褋褌|肖褍薪泻褑懈褟|肖褍薪泻褑褨芯薪邪谢|转讻讜谞讛|禺丕氐賷丞|禺氐賵氐蹖鬲|氐賱丕丨蹖鬲|讴丕乇賵亘丕乇 讴蹖 囟乇賵乇鬲|賵賽蹖跇诏蹖|啶班啶� 啶侧啶東啜栢ň啜膏﹢啜呧à|啜ㄠ〞啜� 啜ㄠ﹣啜灌ň啜皘啜﹣啜灌ň啜傕é啜班ň|喟椸眮喟｀爱啾亅嗖灌硢嗖氞硩嗖氞渤|喔勦抚喔侧浮喔曕箟喔竾喔佮覆喔｀笚喔侧竾喔樴父喔｀竵喔脆笀|喔勦抚喔侧浮喔覆喔∴覆喔｀笘|喙傕竸喔｀竾喔弗喔编竵|旮半姤|銉曘偅銉笺儊銉鍔熻兘|姗熻兘):(?:[^:\r\n]+(?:\r?\n|\r|$))*/,
+			pattern: /((?:^|\r?\n|\r)[ \t]*)(?:Ability|Ahoy matey!|Arwedd|Aspekt|Besigheid Behoefte|Business Need|Caracteristica|Característica|Egenskab|Egenskap|Eiginleiki|Feature|Fīča|Fitur|Fonctionnalité|Fonksyonalite|Funcionalidade|Funcionalitat|Functionalitate|Funcţionalitate|Funcționalitate|Functionaliteit|Fungsi|Funkcia|Funkcija|Funkcionalitāte|Funkcionalnost|Funkcja|Funksie|Funktionalität|Funktionalitéit|Funzionalità|Hwaet|Hwæt|Jellemző|Karakteristik|laH|Lastnost|Mak|Mogucnost|Mogućnost|Moznosti|Možnosti|OH HAI|Omadus|Ominaisuus|Osobina|Özellik|perbogh|poQbogh malja'|Potrzeba biznesowa|Požadavek|Požiadavka|Pretty much|Qap|Qu'meH 'ut|Savybė|Tính năng|Trajto|Vermoë|Vlastnosť|Właściwość|Značilnost|Δυνατότητα|Λειτουργία|Могућност|Мөмкинлек|Особина|Свойство|Үзенчәлеклелек|Функционал|Функционалност|Функция|Функціонал|תכונה|خاصية|خصوصیت|صلاحیت|کاروبار کی ضرورت|وِیژگی|रूप लेख|ਖਾਸੀਅਤ|ਨਕਸ਼ ਨੁਹਾਰ|ਮੁਹਾਂਦਰਾ|గుణము|ಹೆಚ್ಚಳ|ความต้องการทางธุรกิจ|ความสามารถ|โครงหลัก|기능|フィーチャ|功能|機能):(?:[^:\r\n]+(?:\r?\n|\r|$))*/,
 			lookbehind: true,
 			inside: {
 				'important': {
@@ -4488,7 +4488,7 @@ Prism.languages.gedcom = {
 			}
 		},
 		'scenario': {
-			pattern: /(^[ \t]*)(?:Abstract Scenario|Abstrakt Scenario|Achtergrond|Aer|脝r|Agtergrond|All y'all|Antecedentes|Antecedents|Atbur冒ar谩s|Atbur冒ar谩sir|Awww, look mate|B4|Background|Baggrund|Bakgrund|Bakgrunn|Bakgrunnur|Beispiele|Beispiller|B峄慽 c岷h|Cefndir|Cenario|Cen谩rio|Cenario de Fundo|Cen谩rio de Fundo|Cenarios|Cen谩rios|Contesto|Context|Contexte|Contexto|Conto|Contoh|Contone|D忙mi|Dasar|Dead men tell no tales|Delineacao do Cenario|Delinea莽茫o do Cen谩rio|Dis is what went down|D峄� li峄噓|Dyagram senaryo|Dyagram Senaryo|Egzanp|Ejemplos|Eksempler|Ekzemploj|Enghreifftiau|Esbozo do escenario|Escenari|Escenario|Esempi|Esquema de l'escenari|Esquema del escenario|Esquema do Cenario|Esquema do Cen谩rio|Examples|EXAMPLZ|Exempel|Exemple|Exemples|Exemplos|First off|Fono|Forgat贸k枚nyv|Forgat贸k枚nyv v谩zlat|Fundo|Ge莽mi艧|ghantoH|Grundlage|Hannergrond|H谩tt茅r|Heave to|Istorik|Juhtumid|Keadaan|Khung k峄媍h b岷|Khung t矛nh hu峄憂g|K峄媍h b岷|Koncept|Konsep skenario|Kont猫ks|Kontekst|Kontekstas|Konteksts|Kontext|Konturo de la scenaro|Latar Belakang|lut|lut chovnatlh|lutmey|L媒sing Atbur冒ar谩sar|L媒sing D忙ma|Menggariskan Senario|MISHUN|MISHUN SRSLY|mo'|N谩膷rt Scen谩ra|N谩膷rt Sc茅n谩艡e|N谩膷rt Scen谩ru|Oris scenarija|脰rnekler|Osnova|Osnova Scen谩ra|Osnova sc茅n谩艡e|Osnutek|Ozadje|Paraugs|Pavyzd啪iai|P茅ld谩k|Piem膿ri|Plan du sc茅nario|Plan du Sc茅nario|Plan senaryo|Plan Senaryo|Plang vum Szenario|Pozad铆|Pozadie|Pozadina|Pr铆klady|P艡铆klady|Primer|Primeri|Primjeri|Przyk艂ady|Raamstsenaarium|Reckon it's like|Rerefons|Scen谩r|Sc茅n谩艡|Scenarie|Scenarij|Scenarijai|Scenarijaus 拧ablonas|Scenariji|Scen膩rijs|Scen膩rijs p膿c parauga|Scenarijus|Scenario|Sc茅nario|Scenario Amlinellol|Scenario Outline|Scenario Template|Scenariomal|Scenariomall|Scenarios|Scenariu|Scenariusz|Scenaro|Schema dello scenario|Se 冒e|Se the|Se 镁e|Senario|Senaryo|Senaryo deskripsyon|Senaryo Deskripsyon|Senaryo tasla臒谋|Shiver me timbers|Situ膩cija|Situai|Situasie|Situasie Uiteensetting|Skenario|Skenario konsep|Skica|Structura scenariu|Structur膬 scenariu|Struktura scenarija|Stsenaarium|Swa|Swa hwaer swa|Swa hw忙r swa|Szablon scenariusza|Szenario|Szenariogrundriss|Tapaukset|Tapaus|Tapausaihio|Taust|Tausta|Template Keadaan|Template Senario|Template Situai|The thing of it is|T矛nh hu峄憂g|Variantai|Voorbeelde|Voorbeelden|Wharrimean is|Yo\-ho\-ho|You'll wanna|Za艂o偶enia|螤伪蟻伪未蔚委纬渭伪蟿伪|螤蔚蟻喂纬蟻伪蠁萎 危蔚谓伪蟻委慰蠀|危蔚谓维蟻喂伪|危蔚谓维蟻喂慰|违蟺蠈尾伪胃蟻慰|袣械褉械褕|袣芯薪褌械泻褋褌|袣芯薪褑械锌褌|袦懈褋邪谢谢邪褉|袦懈褋芯谢谢邪褉|袨褋薪芯胁邪|袩械褉械写褍屑芯胁邪|袩芯蟹邪写懈薪邪|袩褉械写懈褋褌芯褉懈褟|袩褉械写褘褋褌芯褉懈褟|袩褉懈泻谢邪写懈|袩褉懈屑械褉|袩褉懈屑械褉懈|袩褉懈屑械褉褘|袪邪屑泻邪 薪邪 褋褑械薪邪褉懈泄|小泻懈褑邪|小褌褉褍泻褌褍褉邪 褋褑械薪邪褉懈褬邪|小褌褉褍泻褌褍褉邪 褋褑械薪邪褉懈褟|小褌褉褍泻褌褍褉邪 褋褑械薪邪褉褨褞|小褑械薪邪褉懈泄|小褑械薪邪褉懈泄 褋褌褉褍泻褌褍褉邪褋懈|小褑械薪邪褉懈泄薪褘遥 褌萤蟹械谢械褕械|小褑械薪邪褉懈褬懈|小褑械薪邪褉懈芯|小褑械薪邪褉褨泄|孝邪褉懈褏|耶褉薪訖泻谢訖褉|讚讜讙诪讗讜转|专拽注|转讘谞讬转 转专讞讬砖|转专讞讬砖|丕賱禺賱賮賷丞|丕賱诏賵蹖 爻賳丕乇蹖賵|丕賲孬賱丞|倬爻 賲賳馗乇|夭賲蹖賳賴|爻賳丕乇蹖賵|爻賷賳丕乇賷賵|爻賷賳丕乇賷賵 賲禺胤胤|賲孬丕賱蹖诤|賲賳馗乇 賳丕賲蹝 讴丕 禺丕讴蹃|賲賳馗乇賳丕賲蹃|賳賲賵賳賴 賴丕|啶夃う啶距す啶班ぃ|啶ぐ啶苦う啷冟ざ啷嵿く|啶ぐ啶苦う啷冟ざ啷嵿く 啶班啶ぐ啷囙啶緗啶啶粪啶犩き啷傕ぎ啶縷啜夃é啜距ü啜班è啜距▊|啜啜曕ē啜緗啜啜曕ē啜� 啜⑧ň啜傕啜緗啜啜曕ē啜� 啜班﹤啜� 啜班﹪啜栢ň|啜ǹ啜涏⿱啜曕|喟夃唉喟距肮喟班埃喟侧眮|喟曕哎喟ㄠ皞|喟ㄠ眹喟哎啾嵿隘喟倈喟膏皑啾嵿皑喟苦暗啾囙岸喟倈嗖夃拨嗖距补嗖班玻喑嗋矖嗖赤硜|嗖曕播嗖距哺嗖距舶嗖距矀嗖秥嗖掂部嗖掂舶嗖｀硢|嗖灌部嗖ㄠ硩嗖ㄠ硢嗖侧硢|喙傕竸喔｀竾喔福喙夃覆喔囙競喔竾喙€喔笗喔膏竵喔侧福喔撪箤|喔娻父喔斷競喔竾喔曕副喔о腑喔⑧箞喔侧竾|喔娻父喔斷競喔竾喙€喔笗喔膏竵喔侧福喔撪箤|喙佮笝喔о竸喔脆笖|喔福喔膏笡喙€喔笗喔膏竵喔侧福喔撪箤|喙€喔笗喔膏竵喔侧福喔撪箤|氚瓣步|鞁滊倶毽槫|鞁滊倶毽槫 臧滌殧|鞓坾銈点兂銉椼儷|銈枫儕銉偑|銈枫儕銉偑銈€偊銉堛儵銈ゃ兂|銈枫儕銉偑銉嗐兂銉椼儸|銈枫儕銉偑銉嗐兂銉椼儸銉笺儓|銉嗐兂銉椼儸|渚媩渚嬪瓙|鍓ф湰|鍓ф湰澶х翰|鍔囨湰|鍔囨湰澶х侗|鍦烘櫙|鍦烘櫙澶х翰|鍫存櫙|鍫存櫙澶х侗|鑳屾櫙):[^:\r\n]*/m,
+			pattern: /(^[ \t]*)(?:Abstract Scenario|Abstrakt Scenario|Achtergrond|Aer|Ær|Agtergrond|All y'all|Antecedentes|Antecedents|Atburðarás|Atburðarásir|Awww, look mate|B4|Background|Baggrund|Bakgrund|Bakgrunn|Bakgrunnur|Beispiele|Beispiller|Bối cảnh|Cefndir|Cenario|Cenário|Cenario de Fundo|Cenário de Fundo|Cenarios|Cenários|Contesto|Context|Contexte|Contexto|Conto|Contoh|Contone|Dæmi|Dasar|Dead men tell no tales|Delineacao do Cenario|Delineação do Cenário|Dis is what went down|Dữ liệu|Dyagram senaryo|Dyagram Senaryo|Egzanp|Ejemplos|Eksempler|Ekzemploj|Enghreifftiau|Esbozo do escenario|Escenari|Escenario|Esempi|Esquema de l'escenari|Esquema del escenario|Esquema do Cenario|Esquema do Cenário|Examples|EXAMPLZ|Exempel|Exemple|Exemples|Exemplos|First off|Fono|Forgatókönyv|Forgatókönyv vázlat|Fundo|Geçmiş|ghantoH|Grundlage|Hannergrond|Háttér|Heave to|Istorik|Juhtumid|Keadaan|Khung kịch bản|Khung tình huống|Kịch bản|Koncept|Konsep skenario|Kontèks|Kontekst|Kontekstas|Konteksts|Kontext|Konturo de la scenaro|Latar Belakang|lut|lut chovnatlh|lutmey|Lýsing Atburðarásar|Lýsing Dæma|Menggariskan Senario|MISHUN|MISHUN SRSLY|mo'|Náčrt Scenára|Náčrt Scénáře|Náčrt Scenáru|Oris scenarija|Örnekler|Osnova|Osnova Scenára|Osnova scénáře|Osnutek|Ozadje|Paraugs|Pavyzdžiai|Példák|Piemēri|Plan du scénario|Plan du Scénario|Plan senaryo|Plan Senaryo|Plang vum Szenario|Pozadí|Pozadie|Pozadina|Príklady|Příklady|Primer|Primeri|Primjeri|Przykłady|Raamstsenaarium|Reckon it's like|Rerefons|Scenár|Scénář|Scenarie|Scenarij|Scenarijai|Scenarijaus šablonas|Scenariji|Scenārijs|Scenārijs pēc parauga|Scenarijus|Scenario|Scénario|Scenario Amlinellol|Scenario Outline|Scenario Template|Scenariomal|Scenariomall|Scenarios|Scenariu|Scenariusz|Scenaro|Schema dello scenario|Se ðe|Se the|Se þe|Senario|Senaryo|Senaryo deskripsyon|Senaryo Deskripsyon|Senaryo taslağı|Shiver me timbers|Situācija|Situai|Situasie|Situasie Uiteensetting|Skenario|Skenario konsep|Skica|Structura scenariu|Structură scenariu|Struktura scenarija|Stsenaarium|Swa|Swa hwaer swa|Swa hwær swa|Szablon scenariusza|Szenario|Szenariogrundriss|Tapaukset|Tapaus|Tapausaihio|Taust|Tausta|Template Keadaan|Template Senario|Template Situai|The thing of it is|Tình huống|Variantai|Voorbeelde|Voorbeelden|Wharrimean is|Yo\-ho\-ho|You'll wanna|Założenia|Παραδείγματα|Περιγραφή Σεναρίου|Σενάρια|Σενάριο|Υπόβαθρο|Кереш|Контекст|Концепт|Мисаллар|Мисоллар|Основа|Передумова|Позадина|Предистория|Предыстория|Приклади|Пример|Примери|Примеры|Рамка на сценарий|Скица|Структура сценарија|Структура сценария|Структура сценарію|Сценарий|Сценарий структураси|Сценарийның төзелеше|Сценарији|Сценарио|Сценарій|Тарих|Үрнәкләр|דוגמאות|רקע|תבנית תרחיש|תרחיש|الخلفية|الگوی سناریو|امثلة|پس منظر|زمینه|سناریو|سيناريو|سيناريو مخطط|مثالیں|منظر نامے کا خاکہ|منظرنامہ|نمونه ها|उदाहरण|परिदृश्य|परिदृश्य रूपरेखा|पृष्ठभूमि|ਉਦਾਹਰਨਾਂ|ਪਟਕਥਾ|ਪਟਕਥਾ ਢਾਂਚਾ|ਪਟਕਥਾ ਰੂਪ ਰੇਖਾ|ਪਿਛੋਕੜ|ఉదాహరణలు|కథనం|నేపథ్యం|సన్నివేశం|ಉದಾಹರಣೆಗಳು|ಕಥಾಸಾರಾಂಶ|ವಿವರಣೆ|ಹಿನ್ನೆಲೆ|โครงสร้างของเหตุการณ์|ชุดของตัวอย่าง|ชุดของเหตุการณ์|แนวคิด|สรุปเหตุการณ์|เหตุการณ์|배경|시나리오|시나리오 개요|예|サンプル|シナリオ|シナリオアウトライン|シナリオテンプレ|シナリオテンプレート|テンプレ|例|例子|剧本|剧本大纲|劇本|劇本大綱|场景|场景大纲|場景|場景大綱|背景):[^:\r\n]*/m,
 			lookbehind: true,
 			inside: {
 				'important': {
@@ -4525,7 +4525,7 @@ Prism.languages.gedcom = {
 			}
 		},
 		'atrule': {
-			pattern: /(^[ \t]+)(?:'ach|'a|'ej|7|a|A tak茅|A taktie啪|A tie啪|A z谩rove艌|Aber|Ac|Adott|Akkor|Ak|Aleshores|Ale|Ali|Allora|Alors|Als|Ama|Amennyiben|Amikor|Ampak|an|AN|Ananging|And y'all|And|Angenommen|Anrhegedig a|An|Apabila|At猫s|Atesa|Atunci|Avast!|Aye|A|awer|Bagi|Banjur|Bet|Bi岷縯|Blimey!|Buh|But at the end of the day I reckon|But y'all|But|BUT|Cal|C芒nd|Cando|Cand|Ce|Cuando|膶e|脨a 冒e|脨a|Dadas|Dada|Dados|Dado|DaH ghu' bejlu'|dann|Dann|Dano|Dan|Dar|Dat fiind|Data|Date fiind|Date|Dati fiind|Dati|Da牛i fiind|Da葲i fiind|Dato|DEN|Den youse gotta|Dengan|De|Diberi|Diyelim ki|Donada|Donat|Donita牡o|Do|Dun|Duota|脨urh|Eeldades|Ef|E臒er ki|Entao|Ent茫o|Ent贸n|Entonces|En|Epi|E|脡s|Etant donn茅e|Etant donn茅|Et|脡tant donn茅es|脡tant donn茅e|脡tant donn茅|Etant donn茅es|Etant donn茅s|脡tant donn茅s|Fakat|Gangway!|Gdy|Gegeben seien|Gegeben sei|Gegeven|Gegewe|ghu' noblu'|Gitt|Given y'all|Given|Givet|Givun|Ha|Cho|I CAN HAZ|In|Ir|It's just unbelievable|I|Ja|Je艣li|Je偶eli|Kadar|Kada|Kad|Kai|Kaj|Kdy啪|Ke膹|Kemudian|Ketika|Khi|Kiedy|Ko|Kuid|Kui|Kun|Lan|latlh|Le sa a|Let go and haul|Le|L猫 sa a|L猫|Logo|Lorsqu'<|Lorsque|m盲|Maar|Mais|Maj膮c|Majd|Maka|Manawa|Mas|Ma|Menawa|Men|Mutta|Nalikaning|Nalika|Nanging|N氓r|N盲r|Nato|Nh瓢ng|Niin|Njuk|O zaman|Og|Och|Oletetaan|Onda|Ond|Oraz|Pak|Pero|Per貌|Podano|Pokia木|Pokud|Potem|Potom|Privzeto|Pryd|qaSDI'|Quando|Quand|Quan|S氓|Sed|Se|Siis|Sipoze ke|Sipoze Ke|Sipoze|Si|艦i|葮i|Soit|Stel|Tada|Tad|Takrat|Tak|Tapi|Ter|Tetapi|Tha the|Tha|Then y'all|Then|Th矛|Thurh|Toda|Too right|ugeholl|Und|Un|V脿|vaj|Vendar|Ve|wann|Wanneer|WEN|Wenn|When y'all|When|Wtedy|Wun|Y'know|Yeah nah|Yna|Youse know like when|Youse know when youse got|Y|Za predpokladu|Za p艡edpokladu|Zadani|Zadano|Zadan|Zadate|Zadato|Zak艂adaj膮c|Zaradi|Zatati|脼a 镁e|脼a|脼谩|脼egar|脼urh|螒位位维|螖蔚未慰渭苇谓慰蠀|螝伪喂|螌蟿伪谓|韦蠈蟿蔚|袗 褌邪泻芯卸|袗谐邪褉|袗谢械|袗谢懈|袗屑屑芯|袗|訕谐訖褉|訕泄褌懈泻|訕屑屑邪|袘懈褉芯泻|袙邪|袙訖|袛邪写械薪芯|袛邪薪芯|袛芯锌褍褋褌懈屑|袝褋谢懈|袟邪写邪褌械|袟邪写邪褌懈|袟邪写邪褌芯|袠|袉|袣 褌芯屑褍 卸械|袣邪写邪|袣邪写|袣芯谐邪褌芯|袣芯谐写邪|袣芯谢懈|袥訖泻懈薪|袥械泻懈薪|袧訖褌懈覘訖写訖|袧械褏邪泄|袧芯|袨薪写邪|袩褉懈锌褍褋褌懈屑芯, 褖芯|袩褉懈锌褍褋褌懈屑芯|袩褍褋褌褜|孝邪泻卸械|孝邪|孝芯谐写邪|孝芯写褨|孝芯|校薪写邪|液訖屑|携泻褖芯|讗讘诇|讗讝讬|讗讝|讘讛讬谞转谉|讜讙诐|讻讗砖专|丌賳诏丕賴|丕匕丕賸|丕诏乇|丕賲丕|丕賵乇|亘丕 賮乇囟|亘丕賱賮乇囟|亘賮乇囟|倬诰乇|鬲亘|孬賲|噩亘|毓賳丿賲丕|賮乇囟 讴蹖丕|賱賰賳|賱蹖讴賳|賲鬲賶|賴賳诏丕賲蹖|賵|啶呧啶皘啶斷ぐ|啶曕う啶緗啶曕た啶ㄠ啶む|啶氞啶傕啶縷啶溹が|啶むぅ啶緗啶むう啶緗啶むが|啶ぐ啶ㄠ啶む|啶ぐ|啶う啶縷啜呧à喋噟啜溹é喋嬥▊|啜溹ǹ啜掂﹪啜� 啜曕ǹ|啜溹﹪啜曕ò|啜むé|啜ò|喟呧蔼啾嵿蔼啾佮啊啾亅喟� 喟鞍喟苦案啾嵿哎喟苦挨喟苦安啾媩喟曕熬喟ㄠ翱|喟氞眴喟睄喟艾喟∴翱喟ㄠ唉喟縷喟鞍喟苦隘啾亅嗖嗋拨嗖班硢|嗖ㄠ矀嗖む舶|嗖ㄠ部喑曕病嗖苦拨|嗖菠喑嵿菠喑亅嗖膏硩嗖ム部嗖む部嗖波喑嵿波喑亅喔佮赋喔笝喔斷箖喔箟|喔斷副喔囙笝喔编箟喔檤喙佮笗喙坾喙€喔∴阜喙堗腑|喙佮弗喔皘攴鸽煬氅�<|攴鸽Μ瓿�<|雼�<|毵岇暯<|毵岇澕<|毹检爛<|臁瓣贝<|頃橃毵�<|銇嬨仱<|銇椼亱銇�<|銇熴仩銇�<|銇倝銇�<|銈傘仐<|涓︿笖<|浣嗐仐<|浣嗘槸<|鍋囧<|鍋囧畾<|鍋囪ō<|鍋囪<|鍓嶆彁<|鍚屾椂<|鍚屾檪<|骞朵笖<|褰�<|鐣�<|鑰屼笖<|閭ｄ箞<|閭ｉ杭<)(?=[ \t])/m,
+			pattern: /(^[ \t]+)(?:'ach|'a|'ej|7|a|A také|A taktiež|A tiež|A zároveň|Aber|Ac|Adott|Akkor|Ak|Aleshores|Ale|Ali|Allora|Alors|Als|Ama|Amennyiben|Amikor|Ampak|an|AN|Ananging|And y'all|And|Angenommen|Anrhegedig a|An|Apabila|Atès|Atesa|Atunci|Avast!|Aye|A|awer|Bagi|Banjur|Bet|Biết|Blimey!|Buh|But at the end of the day I reckon|But y'all|But|BUT|Cal|Când|Cando|Cand|Ce|Cuando|Če|Ða ðe|Ða|Dadas|Dada|Dados|Dado|DaH ghu' bejlu'|dann|Dann|Dano|Dan|Dar|Dat fiind|Data|Date fiind|Date|Dati fiind|Dati|Daţi fiind|Dați fiind|Dato|DEN|Den youse gotta|Dengan|De|Diberi|Diyelim ki|Donada|Donat|Donitaĵo|Do|Dun|Duota|Ðurh|Eeldades|Ef|Eğer ki|Entao|Então|Entón|Entonces|En|Epi|E|És|Etant donnée|Etant donné|Et|Étant données|Étant donnée|Étant donné|Etant données|Etant donnés|Étant donnés|Fakat|Gangway!|Gdy|Gegeben seien|Gegeben sei|Gegeven|Gegewe|ghu' noblu'|Gitt|Given y'all|Given|Givet|Givun|Ha|Cho|I CAN HAZ|In|Ir|It's just unbelievable|I|Ja|Jeśli|Jeżeli|Kadar|Kada|Kad|Kai|Kaj|Když|Keď|Kemudian|Ketika|Khi|Kiedy|Ko|Kuid|Kui|Kun|Lan|latlh|Le sa a|Let go and haul|Le|Lè sa a|Lè|Logo|Lorsqu'<|Lorsque|mä|Maar|Mais|Mając|Majd|Maka|Manawa|Mas|Ma|Menawa|Men|Mutta|Nalikaning|Nalika|Nanging|Når|När|Nato|Nhưng|Niin|Njuk|O zaman|Og|Och|Oletetaan|Onda|Ond|Oraz|Pak|Pero|Però|Podano|Pokiaľ|Pokud|Potem|Potom|Privzeto|Pryd|qaSDI'|Quando|Quand|Quan|Så|Sed|Se|Siis|Sipoze ke|Sipoze Ke|Sipoze|Si|Şi|Și|Soit|Stel|Tada|Tad|Takrat|Tak|Tapi|Ter|Tetapi|Tha the|Tha|Then y'all|Then|Thì|Thurh|Toda|Too right|ugeholl|Und|Un|Và|vaj|Vendar|Ve|wann|Wanneer|WEN|Wenn|When y'all|When|Wtedy|Wun|Y'know|Yeah nah|Yna|Youse know like when|Youse know when youse got|Y|Za predpokladu|Za předpokladu|Zadani|Zadano|Zadan|Zadate|Zadato|Zakładając|Zaradi|Zatati|Þa þe|Þa|Þá|Þegar|Þurh|Αλλά|Δεδομένου|Και|Όταν|Τότε|А також|Агар|Але|Али|Аммо|А|Әгәр|Әйтик|Әмма|Бирок|Ва|Вә|Дадено|Дано|Допустим|Если|Задате|Задати|Задато|И|І|К тому же|Када|Кад|Когато|Когда|Коли|Ләкин|Лекин|Нәтиҗәдә|Нехай|Но|Онда|Припустимо, що|Припустимо|Пусть|Также|Та|Тогда|Тоді|То|Унда|Һәм|Якщо|אבל|אזי|אז|בהינתן|וגם|כאשר|آنگاه|اذاً|اگر|اما|اور|با فرض|بالفرض|بفرض|پھر|تب|ثم|جب|عندما|فرض کیا|لكن|لیکن|متى|هنگامی|و|अगर|और|कदा|किन्तु|चूंकि|जब|तथा|तदा|तब|परन्तु|पर|यदि|ਅਤੇ|ਜਦੋਂ|ਜਿਵੇਂ ਕਿ|ਜੇਕਰ|ਤਦ|ਪਰ|అప్పుడు|ఈ పరిస్థితిలో|కాని|చెప్పబడినది|మరియు|ಆದರೆ|ನಂತರ|ನೀಡಿದ|ಮತ್ತು|ಸ್ಥಿತಿಯನ್ನು|กำหนดให้|ดังนั้น|แต่|เมื่อ|และ|그러면<|그리고<|단<|만약<|만일<|먼저<|조건<|하지만<|かつ<|しかし<|ただし<|ならば<|もし<|並且<|但し<|但是<|假如<|假定<|假設<|假设<|前提<|同时<|同時<|并且<|当<|當<|而且<|那么<|那麼<)(?=[ \t])/m,
 			lookbehind: true
 		},
 		'string': {
@@ -4566,7 +4566,7 @@ Prism.languages.git = {
 	/*
 	 * Regexp to match the changed lines in a git diff output. Check the example below.
 	 */
-	'deleted': /^[-鈥揮.*/m,
+	'deleted': /^[-–].*/m,
 	'inserted': /^\+.*/m,
 
 	/*
@@ -5919,7 +5919,7 @@ Prism.languages.javastacktrace = {
 	// https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/StackTraceElement.html#toString()
 	//
 	// A valid Java module name is defined as:
-	//   "A module name consists of one or more Java identifiers (搂3.8) separated by "." tokens."
+	//   "A module name consists of one or more Java identifiers (§3.8) separated by "." tokens."
 	// https://docs.oracle.com/javase/specs/jls/se9/html/jls-6.html#jls-ModuleName
 	//
 	// A Java module version is defined by this class:
@@ -7017,10 +7017,10 @@ Prism.languages.julia = {
 	'number': /(?:\b(?=\d)|\B(?=\.))(?:0[box])?(?:[\da-f]+(?:_[\da-f]+)*(?:\.(?:\d+(?:_\d+)*)?)?|\.\d+(?:_\d+)*)(?:[efp][+-]?\d+(?:_\d+)*)?j?/i,
 	// https://docs.julialang.org/en/v1/manual/mathematical-operations/
 	// https://docs.julialang.org/en/v1/manual/mathematical-operations/#Operator-Precedence-and-Associativity-1
-	'operator': /&&|\|\||[-+*^%梅鈯�&$\\]=?|\/[\/=]?|!=?=?|\|[=>]?|<(?:<=?|[=:|])?|>(?:=|>>?=?)?|==?=?|[~鈮犫墹鈮�'鈭氣垱]/,
+	'operator': /&&|\|\||[-+*^%÷⊻&$\\]=?|\/[\/=]?|!=?=?|\|[=>]?|<(?:<=?|[=:|])?|>(?:=|>>?=?)?|==?=?|[~≠≤≥'√∛]/,
 	'punctuation': /::?|[{}[\]();,.?]/,
 	// https://docs.julialang.org/en/v1/base/numbers/#Base.im
-	'constant': /\b(?:(?:NaN|Inf)(?:16|32|64)?|im|pi)\b|[蟺鈩痌/
+	'constant': /\b(?:(?:NaN|Inf)(?:16|32|64)?|im|pi)\b|[πℯ]/
 };
 
 
@@ -7836,7 +7836,7 @@ Prism.languages.lolcode = {
 		pattern: /(^|\s)(?:NOT|BOTH SAEM|DIFFRINT|(?:SUM|DIFF|PRODUKT|QUOSHUNT|MOD|BIGGR|SMALLR|BOTH|EITHER|WON|ALL|ANY) OF)(?=\s|,|$)/,
 		lookbehind: true
 	},
-	'punctuation': /\.{3}|鈥,|!/
+	'punctuation': /\.{3}|…|,|!/
 };
 
 
@@ -11796,7 +11796,7 @@ Prism.languages.rest = {
 		}
 	},
 	'list-bullet': {
-		pattern: /(^\s*)(?:[*+\-鈥⑩€ｂ亙]|\(?(?:\d+|[a-z]|[ivxdclm]+)\)|(?:\d+|[a-z]|[ivxdclm]+)\.)(?= )/im,
+		pattern: /(^\s*)(?:[*+\-•‣⁃]|\(?(?:\d+|[a-z]|[ivxdclm]+)\)|(?:\d+|[a-z]|[ivxdclm]+)\.)(?= )/im,
 		lookbehind: true,
 		alias: 'punctuation'
 	},
@@ -11870,7 +11870,7 @@ Prism.languages.rest = {
 	// explicit markup start,
 	// and anonymous hyperlink target shortcut (__)
 	'punctuation': {
-		pattern: /(^\s*)(?:\|(?= |$)|(?:---?|鈥攟\.\.|__)(?= )|\.\.$)/m,
+		pattern: /(^\s*)(?:\|(?= |$)|(?:---?|—|\.\.|__)(?= )|\.\.$)/m,
 		lookbehind: true
 	}
 };
@@ -12575,7 +12575,7 @@ Prism.languages.roboconf = {
 				'macro-keyword': macroKeyword,
 				'macro-variable': macroVariable,
 				'escaped-char': {
-					pattern: /%['"()<>=卢^~;,#]/i,
+					pattern: /%['"()<>=¬^~;,#]/i,
 				},
 				'punctuation': punctuation
 			}
@@ -12635,7 +12635,7 @@ Prism.languages.roboconf = {
 		},
 		// Decimal (1.2e23), hexadecimal (0c1x)
 		'number': number,
-		'operator': /\*\*?|\|\|?|!!?|娄娄?|<[>=]?|>[<=]?|[-+\/=&]|[~卢^]=?/i,
+		'operator': /\*\*?|\|\|?|!!?|¦¦?|<[>=]?|>[<=]?|[-+\/=&]|[~¬^]=?/i,
 		'punctuation': punctuation
 	};
 
@@ -15017,7 +15017,7 @@ Prism.languages.vim = {
 
 Prism.languages['visual-basic'] = {
 	'comment': {
-		pattern: /(?:['鈥樷€橾|REM\b)(?:[^\r\n_]|_(?:\r\n?|\n)?)*/i,
+		pattern: /(?:['‘’]|REM\b)(?:[^\r\n_]|_(?:\r\n?|\n)?)*/i,
 		inside: {
 			'keyword': /^REM/i
 		}
@@ -15028,7 +15028,7 @@ Prism.languages['visual-basic'] = {
 		greedy: true
 	},
 	'string': {
-		pattern: /\$?["鈥溾€漖(?:["鈥溾€漖{2}|[^"鈥溾€漖)*["鈥溾€漖C?/i,
+		pattern: /\$?["“”](?:["“”]{2}|[^"“”])*["“”]C?/i,
 		greedy: true
 	},
 	'date': {
@@ -16241,7 +16241,7 @@ var _ = {
 	plugins: {},
 
 	/**
-	 * This is the most high-level function in Prism鈥檚 API.
+	 * This is the most high-level function in Prism’s API.
 	 * It fetches all the elements that have a `.language-xxxx` class and then calls {@link Prism.highlightElement} on
 	 * each one of them.
 	 *
@@ -16386,7 +16386,7 @@ var _ = {
 	},
 
 	/**
-	 * Low-level function, only use if you know what you鈥檙e doing. It accepts a string of text as input
+	 * Low-level function, only use if you know what you’re doing. It accepts a string of text as input
 	 * and the language definitions to use, and returns a string with the HTML produced.
 	 *
 	 * The following hooks will be run:
@@ -17386,11 +17386,11 @@ Prism.languages.js = Prism.languages.javascript;
 
 	var Prism = window.Prism;
 
-	var LOADING_MESSAGE = 'Loading鈥�';
+	var LOADING_MESSAGE = 'Loading…';
 	var FAILURE_MESSAGE = function (status, message) {
-		return '鉁� Error ' + status + ' while fetching file: ' + message;
+		return '✖ Error ' + status + ' while fetching file: ' + message;
 	};
-	var FAILURE_EMPTY_MESSAGE = '鉁� Error: File does not exist or is empty';
+	var FAILURE_EMPTY_MESSAGE = '✖ Error: File does not exist or is empty';
 
 	var EXTENSIONS = {
 		'js': 'javascript',

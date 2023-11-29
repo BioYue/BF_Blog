@@ -12,6 +12,9 @@
     <orderEntry type="library" name="zh-cn" level="application" />
     <orderEntry type="library" name="toastui-editor-plugin-code-syntax-highlight-all" level="application" />
     <orderEntry type="library" name="toastui-editor-plugin-code-syntax-highlight" level="application" />
+    <orderEntry type="library" name="prism" level="application" />
+    <orderEntry type="library" name="toastui-editor-plugin-color-syntax" level="application" />
+    <orderEntry type="library" name="tui-color-picker" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
