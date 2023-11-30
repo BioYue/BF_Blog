@@ -9,17 +9,23 @@
 {% endblock %}
 
 {% block head %}
+    {#        <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/dark.css') }}">#}
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/toastui-editor.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/prism.min.css') }}">
     <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css"/>
-{#        <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/dark.css') }}">#}
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css"/>
-    <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-all.min.js') }}"></script>
+    <link rel="stylesheet"
+          href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css"/>
+    <script type="text/javascript"
+            src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-all.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/latest/zh-cn.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight-all.js') }}"></script>
-    <script type="text/javascript" src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
-    <script type="text/javascript" src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
+    <script type="text/javascript"
+            src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight-all.js') }}"></script>
+    <script type="text/javascript"
+            src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
+    <script type="text/javascript"
+            src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -57,6 +63,11 @@
                 </div>
             </div>
 
+            <div class="layui-form-item">
+                <label class="layui-form-label">封面选择</label>
+                <div class="layui-input-block" id="img_list"></div>
+            </div>
+
             <div style="display: flex;justify-content: flex-end; padding:0 30px 30px 0">
                 <button type="button" lay-filter="publish" lay-submit class="layui-btn layui-bg-blue">发布文章</button>
             </div>
@@ -73,19 +84,20 @@
             let util = layui.util;
             let form = layui.form;
             let plugin = toastui.Editor.plugin
+            let img_list = []
+            let cover = ''
             let editor = new toastui.Editor({
                 el: document.querySelector('#editor'),
-                initialEditType: 'markdown', // 初始编辑类型，这里是 Markdown
-                previewStyle: 'vertical', // 预览样式，可以是 'tab', 'vertical'
-                height: '700px', // 编辑器高度,
-                language: 'zh-CN',   // 设置语言为中文
+                initialEditType: 'markdown',
+                previewStyle: 'vertical',
+                height: '700px',
+                language: 'zh-CN',
                 {#theme: 'dark',#}
                 plugins: [plugin.codeSyntaxHighlight, plugin.colorSyntax],
 
                 hooks: {
                     addImageBlobHook: (blob, callback) => {
                         uploadImage(blob, function (imageUrl) {
-                            console.log(blob)
                             callback(imageUrl); // 将链接传递给编辑器
                         }, function (error) {
                             console.error('图片上传失败：', error);
@@ -99,7 +111,6 @@
                 formData.append('file', imageBlob);
                 formData.append('name', imageBlob.name);
                 formData.append('size', imageBlob.size.toString());
-                formData.append('token', '{{ file_token }}');
                 $.ajax({
                     url: '{{ url_for('admin.upload') }}',
                     type: 'POST',
@@ -108,6 +119,7 @@
                     contentType: false,
                     success: function (data) {
                         if (data.url !== '') {
+                            img_list.push(data)
                             successCallback(data.url);
                         } else {
                             errorCallback('图片上传失败');
@@ -130,15 +142,34 @@
                     }
                     layer.open({
                         type: 1,
-                        area: ['600px', 'auto'],
+                        area: ['600px', ''],
                         resize: false,
                         shadeClose: true,
                         title: '发布文章',
-                        offset: 'auto',
+                        offset: '150px',
                         content: $('#post-template').html(),
-                        success: function () {
+                        success: function (layero, index, that) {
                             // 对弹层中的表单进行初始化渲染
                             form.render();
+
+                            const imageContainer = $('#img_list');
+                            // 渲染已选图片
+                            img_list.forEach((img, index) => {
+                                const imgElement = $('<img alt="" src="">').attr('src', img.url).addClass('clickable-image')
+                                // 监听图片点击事件
+                                imgElement.click(() => {
+                                    imgElement.siblings('img').removeClass('select_cover')
+                                    imgElement.addClass('select_cover');
+                                    cover = img.url
+                                })
+
+                                imageContainer.append(imgElement)
+                            })
+
+                            // 重新设置弹窗高度
+                            let box_height = Math.ceil(img_list.length / 3) * 100 + 250
+                            layero.css('height', `${box_height}px`)
+
                             form.on('submit(publish)', function (data) {
                                 let tags = data.field;
                                 let category = form.val('filter-test-layer').category || "{{ category_list[0].id }}";
@@ -150,7 +181,8 @@
                                     tags: JSON.stringify(tags),
                                     html: html,
                                     markdown: markdown,
-                                    token: '{{ file_token }}'
+                                    img_list: JSON.stringify(img_list),
+                                    cover: cover
                                 }
                                 $.post('{{ url_for('admin.post_add') }}', form_data, (res) => {
                                         if (res === 'success') {

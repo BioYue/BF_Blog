@@ -129,7 +129,7 @@ body::after {
 
 
 /* ------------ 头部表单 ------------ */
-.head_form .layui-row{
+.head_form .layui-row {
     margin: 10px 20px;
 }
 
@@ -138,15 +138,35 @@ body::after {
     justify-content: space-around;
 }
 
-.head_form .layui-btn{
+.head_form .layui-btn {
     padding: 0 38px;
 }
 
-.head_form .layui-col-md8{
+.head_form .layui-col-md8 {
     padding-left: 0;
 }
 
 /* ------------ 文章编辑页面弹出层样式 ------------ */
-.layui-layer-content{
+.layui-layer-content {
     overflow: hidden !important;
+}
+
+.clickable-image {
+    height: 100px;
+    width: 100px;
+    margin: 8px;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.clickable-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    border-color: #3498db;
+    background: linear-gradient(45deg, #3498db, #8e44ad);
+}
+
+.select_cover{
+    border: 2px solid #3498db;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3)
 }
