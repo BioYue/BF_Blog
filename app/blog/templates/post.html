@@ -1,19 +1,69 @@
 {% extends 'common/base.html' %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('blog.static', filename='prism/themes/prism-one-dark.css') }}">
+    <script type="text/javascript" src="{{ url_for('blog.static', filename='prism/prism.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('blog.static', filename='prism/plugins/line-numbers/prism-line-numbers.min.css') }}">
+    <script type="text/javascript" src="{{ url_for('blog.static', filename='prism/plugins/line-numbers/prism-line-numbers.min.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <div class="layui-container">
         <div class="layui-row layui-col-space15">
+
             {# 中心区内容 #}
             <div class="layui-col-md9">
-
-
+                <div class="post-card">
+                    <div class="post-title">
+                        <h1>{{ post.title }}</h1>
+                    </div>
+                    <div class="post-msg">
+                        <span>
+                            <i class="layui-icon">&#xe612;</i>
+                            <span>北枫</span>
+                        </span>
+                        <span>
+                            <i class="layui-icon">&#xe705;</i>
+                            <a href="#">{{ post.category.name }}</a>
+                        </span>
+                        <span>
+                            <i class="layui-icon">&#xe68d;</i>
+                            <span>{{ post.add_time | strftime }}</span>
+                        </span>
+                        <span>
+                            <i class="layui-icon">&#xe62c;</i>
+                            <span>{{ post.read_count }}</span>
+                        </span>
+                        <span>
+                            <i class="layui-icon">&#xe674;</i>
+                            {% if post.tags %}
+                                {% for tag in post.tags %}
+                                    <a class="layui-btn layui-btn-xs layui-btn-primary" href="#"
+                                       style="color: {{ tag.color }}; margin-left: 4px; margin-bottom: 2px">{{ tag.name }}</a>
+                                {% endfor %}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="post-content">
+                        {{ post.content_html|safe }}
+                    </div>
+                </div>
             </div>
+
             {# 右边侧边栏 #}
             <div class="layui-col-md3">
                 {% include 'common/sidebar.html' %}
             </div>
         </div>
     </div>
+    <script src="{{ url_for('blog.static', filename='js/activate-power-mode.js') }}"></script>
+    <script>
+        POWERMODE.colorful = true; // ture 为启用礼花特效
+        POWERMODE.shake = false; // false 为禁用震动特效
+        document.body.addEventListener('input', POWERMODE);
+
+        layui.jquery('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
 {% endblock %}
 
 

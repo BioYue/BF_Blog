@@ -26,7 +26,14 @@
                 url: '{{ url_for("admin.post_query") }}',
                 cols: [[ //标题栏
                     {field: 'id', title: '序号', width: 120, sort: true, align: 'center'},
-                    {field: 'title', title: '文章标题', width: '', align: 'center'},
+                    {
+                        field: 'title',
+                        title: '文章标题',
+                        width: '',
+                        align: 'center',
+                        templet: (d)=>{
+                            return '<div><a href="/blog/post/'+ d.id +'" class="layui-table-link">'+ d.title + '</a></div>'
+                        }},
                     {field: 'read_count', title: '阅读次数', width: 180, align: 'center'},
                     {field: 'category', title: '文章分类', width: 180, align: 'center'},
                     {field: 'add_time', title: '创建时间', width: 180, align: 'center'},
@@ -37,8 +44,9 @@
                 limit: 10 // 每页默认显示的数量
             });
 
-            inst.resize();
-            inst.setColsWidth();
+
+            {#inst.resize();#}
+            {#inst.setColsWidth();#}
         });
     </script>
 {% endblock %}

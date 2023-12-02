@@ -97,6 +97,7 @@
 
                 hooks: {
                     addImageBlobHook: (blob, callback) => {
+                        console.log(blob)
                         uploadImage(blob, function (imageUrl) {
                             callback(imageUrl); // 将链接传递给编辑器
                         }, function (error) {
@@ -109,7 +110,7 @@
             function uploadImage(imageBlob, successCallback, errorCallback) {
                 let formData = new FormData();
                 formData.append('file', imageBlob);
-                formData.append('name', imageBlob.name);
+                formData.append('name', imageBlob.name==='image.png' ? imageBlob.lastModified+'.png' : imageBlob.name);
                 formData.append('size', imageBlob.size.toString());
                 $.ajax({
                     url: '{{ url_for('admin.upload') }}',
@@ -173,6 +174,7 @@
                             form.on('submit(publish)', function (data) {
                                 let tags = data.field;
                                 let category = form.val('filter-test-layer').category || "{{ category_list[0].id }}";
+                                console.log(editor)
                                 let html = editor.getHTML()
                                 let markdown = editor.getMarkdown()
                                 let form_data = {
@@ -184,17 +186,22 @@
                                     img_list: JSON.stringify(img_list),
                                     cover: cover
                                 }
+
                                 $.post('{{ url_for('admin.post_add') }}', form_data, (res) => {
+                                    console.log(res)
                                         if (res === 'success') {
-                                            layer.close(1, () => {
+                                            layer.closeAll(() => {
                                                 layer.msg('保存成功', {icon: 1, time: 1500}, () => {
                                                     window.location.href = '{{ url_for('admin.post') }}';
+                                                    return false;
                                                 });
+                                                return false;
                                             });
                                         }
+                                        return false;
                                     }
                                 )
-                                return false; // 阻止默认 form 跳转
+                                {#return false; // 阻止默认 form 跳转#}
                             });
                         }
                     })

@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from utils.filters import FILTERS
 
 # 实例化SQLAlchemy对象
 db = SQLAlchemy()
@@ -34,6 +35,10 @@ def create_app():
     # 注册模型
     from app.blog import models
     from app.admin import models
+
+    # 注册过滤器
+    for key, value in FILTERS.items():
+        app.add_template_filter(value, key)
 
     # 注册首页url规则
     app.add_url_rule(rule='/', endpoint='index', view_func=blog.index)

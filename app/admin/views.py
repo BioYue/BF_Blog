@@ -228,8 +228,4 @@ def tag_query():
     return jsonify(data)
 
 
-@bp.route('/test_url')
-def test_url():
-    html = Post.query.get(8).content_html
-    print(html)
-    return render_template('admin/test.html', **locals())
+

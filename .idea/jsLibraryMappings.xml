@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$" libraries="{canvas-nest, prism, toastui-editor, toastui-editor-all, toastui-editor-plugin-code-syntax-highlight, toastui-editor-plugin-code-syntax-highlight-all, toastui-editor-plugin-color-syntax, tui-color-picker, zh-cn}" />
+    <file url="file://$PROJECT_DIR$" libraries="{canvas-nest, prism, prismjs, toastui-editor, toastui-editor-all, toastui-editor-plugin-code-syntax-highlight, toastui-editor-plugin-code-syntax-highlight-all, toastui-editor-plugin-color-syntax, tui-color-picker, zh-cn}" />
   </component>
 </project>

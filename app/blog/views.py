@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from .models import Post
 
 # 实例化蓝图
@@ -9,6 +9,12 @@ def index():
     return render_template('index.html')
 
 
-@bp.route('/post')
-def post():
-    return render_template('post.html')
+@bp.route('/post/<int:post_id>')
+def post(post_id):
+    """
+    文章详情页
+    :return:
+    """
+    print(post_id)
+    post = Post.query.get(post_id)
+    return render_template('post.html', **locals())
