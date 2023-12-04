@@ -271,7 +271,7 @@ body::after {
 
 /*阅读全文链接颜色*/
 .post-card .detail, .category {
-    color: #227eaa;
+    color: #2a97cbcf;
 }
 
 .post-msg {
@@ -369,8 +369,24 @@ body::after {
     margin-bottom: 16px;
 }
 
+/* 文章底部 */
+.post-tag {
+    display: flex;
+    align-items: center;
+}
 
-/* 代码块 */
+.post-tag div {
+    margin-right: 60px;
+    padding: 8px 0;
+}
+
+.post-tag a {
+    color: rgba(40, 157, 255, 0.81);
+}
+
+.post-tag span {
+    color: #b9a8a8;
+}
 
 
 

@@ -77,6 +77,12 @@
 {% endblock %}
 
 {% block script %}
+    <script src="{{ url_for('admin.static', filename='editor/activate-power-mode.js') }}"></script>
+    <script>
+        POWERMODE.colorful = true; // ture 为启用礼花特效
+        POWERMODE.shake = false; // false 为禁用震动特效
+        document.body.addEventListener('input', POWERMODE);
+    </script>
     <script>
         layui.use(() => {
             let $ = layui.$;
@@ -110,7 +116,7 @@
             function uploadImage(imageBlob, successCallback, errorCallback) {
                 let formData = new FormData();
                 formData.append('file', imageBlob);
-                formData.append('name', imageBlob.name==='image.png' ? imageBlob.lastModified+'.png' : imageBlob.name);
+                formData.append('name', imageBlob.name === 'image.png' ? imageBlob.lastModified + '.png' : imageBlob.name);
                 formData.append('size', imageBlob.size.toString());
                 $.ajax({
                     url: '{{ url_for('admin.upload') }}',
@@ -188,7 +194,7 @@
                                 }
 
                                 $.post('{{ url_for('admin.post_add') }}', form_data, (res) => {
-                                    console.log(res)
+                                        console.log(res)
                                         if (res === 'success') {
                                             layer.closeAll(() => {
                                                 layer.msg('保存成功', {icon: 1, time: 1500}, () => {
