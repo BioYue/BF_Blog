@@ -77,9 +77,8 @@ class Comment(BaseModel):
     visitor_ip = db.Column(db.String(50), comment='游客ip')
     visitor_address = db.Column(db.String(50), comment='游客地址')
     post_id = db.Column(db.Integer, db.ForeignKey('post_db.id'), comment='文章id')
-    replied_id = db.Column(db.Integer, db.ForeignKey('comment_db.id'), comment='回复属于某一条评论')
-    replied = db.relationship('Comment', back_populates='replies', remote_side='Comment.id')
-    replies = db.relationship('Comment', back_populates='replied', cascade='delete')
+    replied_id = db.Column(db.Integer, db.ForeignKey('comment_db.id'), comment='回复的评论id')
+    replied = db.relationship('Comment', backref='replies', remote_side='Comment.id', cascade='delete')
 
 
 class Message(BaseModel):

@@ -180,9 +180,9 @@
                             form.on('submit(publish)', function (data) {
                                 let tags = data.field;
                                 let category = form.val('filter-test-layer').category || "{{ category_list[0].id }}";
-                                console.log(editor)
                                 let html = editor.getHTML()
                                 let markdown = editor.getMarkdown()
+
                                 let form_data = {
                                     title: title,
                                     category: category,

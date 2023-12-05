@@ -67,7 +67,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="comment">
+                    {% include 'common/module/comment_edit.html' %}
+                </div>
             </div>
+
 
             {# 右边侧边栏 #}
             <div class="layui-col-md3">
@@ -81,6 +85,7 @@
         POWERMODE.shake = false; // false 为禁用震动特效
         document.body.addEventListener('input', POWERMODE);
 
+        // 代码块行号展示
         layui.jquery('pre').addClass("line-numbers").css("white-space", "pre-wrap");
         layui.use(function () {
             let util = layui.util;

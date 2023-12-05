@@ -381,11 +381,70 @@ body::after {
 }
 
 .post-tag a {
-    color: rgba(40, 157, 255, 0.81);
+    color: #096ec3cf;
 }
 
 .post-tag span {
     color: #b9a8a8;
+}
+
+
+/* ------------ 评论发送内容样式 ------------ */
+.comment {
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    margin-top: 15px;
+    border-radius: 5px;
+    min-height: 100px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+/*留言页标题样式*/
+.comment .comment-title {
+    text-align: center;
+}
+
+/*留言内容样式*/
+.comment .comment-edit {
+    padding: 0 18px;
+    border-radius: 8px;
+}
+
+.comment .comment-edit h3, .comment .comment-edit h4 {
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+/*留言列表底部间距*/
+.comment .comment-item li {
+    margin-bottom: 20px;
+}
+
+
+.comment-send {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.comment-send h3{
+    position: relative;
+    padding-left: 1.2em;
+    font-size: 15px;
+}
+
+.comment-send h3:before {
+    position: absolute;
+    content: '';
+    width: 4px;
+    background: #627bf5;
+    top: 10%;
+    left: 2px;
+    bottom: 10%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px -1px #627bf5;
 }
 
 
