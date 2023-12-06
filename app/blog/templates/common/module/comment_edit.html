@@ -1,28 +1,30 @@
-<form class="comment-edit layui-form">
-    <h3 class="comment-title"><span style="font-size: 19px">😉</span>&nbsp;&nbsp;&nbsp;吹过岁月的和弦&nbsp;&nbsp;是你我相识的初篇
-    </h3>
-    <div class="layui-form" id="comment_board">
-        <div class="layui-form-item ">
+<div class="comment">
+    <form class="comment-edit layui-form">
+        <h3 class="comment-title"><span style="font-size: 19px">😉</span>&nbsp;&nbsp;&nbsp;吹过岁月的和弦&nbsp;&nbsp;是你我相识的初篇
+        </h3>
+        <div class="layui-form" id="comment_board">
+            <div class="layui-form-item ">
             <textarea id="cmt_content" class="layui-textarea" rows="5" cols="30" placeholder="请输入评论内容(●'◡'●)"
                       name="content" lay-verify="required"></textarea>
-        </div>
-        <div class="layui-form-item layui-row layui-col-space15">
-            <div class="layui-row layui-col-md6">
-                <input type="text" id="cmt_author" class="layui-input" placeholder="请输入你的名字" name="name"
-                       lay-verify="required">
             </div>
-            <div class="layui-row layui-col-md6">
-                <input type="text" id="cmt_email" class="layui-input" placeholder="请输入你的邮箱" name="email"
-                       lay-verify="email|required"
-                >
+            <div class="layui-form-item layui-row layui-col-space15">
+                <div class="layui-row layui-col-md6">
+                    <input type="text" id="cmt_author" class="layui-input" placeholder="请输入你的名字" name="name"
+                           lay-verify="required">
+                </div>
+                <div class="layui-row layui-col-md6">
+                    <input type="text" id="cmt_email" class="layui-input" placeholder="请输入你的邮箱" name="email"
+                           lay-verify="email|required"
+                    >
+                </div>
+            </div>
+            <div class="comment-send">
+                <h3>已有评论<span style="font-size: 14px; color: #909399"> {{ comments | length }} 条</span></h3>
+                <button type="button" lay-filter="publish" lay-submit class="layui-btn layui-bg-blue">发布</button>
             </div>
         </div>
-        <div class="comment-send">
-            <h3>已有评论<span style="font-size: 14px; color: #909399"> {{ comments | length }} 条</span></h3>
-            <button type="button" lay-filter="publish" lay-submit class="layui-btn layui-bg-blue">发布</button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 
 <script>
     layui.use(() => {
@@ -36,7 +38,7 @@
                 email: field.email,
                 post_id: '{{ post.id }}'
             }
-            $.post('{{ url_for('blog.comment_add') }}', form_data, (res)=>{
+            $.post('{{ url_for('blog.comment_add') }}', form_data, (res) => {
                 console.log(res)
             })
         })

@@ -1,0 +1,22 @@
+<div class="comment-list">
+    <ul class="message-item">
+        {% for comment in comments %}
+            <li class="layui-row">
+                <div class="layui-col-md1">
+                    <img src="{{ url_for('blog.static',filename='imgs/dog.jpg') }}" alt="">
+                </div>
+                <div class="layui-col-md11">
+                    <strong>{{ comment.visitor_name }}</strong>
+                    <div style="margin: 10px 0">
+                        <p>{{ comment.content }}</p>
+                    </div>
+                    <div class="list_bottom">
+                        <span>{{ comment.add_time | strftime_comment }}</span>
+                        <span class="layui-badge-rim">{{ comment.visitor_address | address }}</span>
+                        <button class="layui-btn layui-btn-xs layui-btn-primary comment_reply">回复</button>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

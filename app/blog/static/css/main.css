@@ -390,11 +390,11 @@ body::after {
 
 
 /* ------------ 评论发送内容样式 ------------ */
-.comment {
+.comment, .comment-list {
     background-color: #fff;
     box-sizing: border-box;
     padding: 5px 20px;
-    margin-top: 15px;
+    margin-bottom: 15px;
     border-radius: 5px;
     min-height: 100px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
@@ -411,7 +411,7 @@ body::after {
     border-radius: 8px;
 }
 
-.comment .comment-edit h3, .comment .comment-edit h4 {
+.comment .comment-edit h3 {
     margin: 20px 0;
     font-weight: 500;
 }
@@ -429,7 +429,7 @@ body::after {
     position: relative;
 }
 
-.comment-send h3{
+.comment-send h3 {
     position: relative;
     padding-left: 1.2em;
     font-size: 15px;
@@ -448,6 +448,33 @@ body::after {
 }
 
 
+/* ------------ 评论列表样式 ------------ */
+.comment-list .message-item {
+    margin: 15px 0;
+}
+
+.comment-list .message-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 3px;
+    border: 1px solid #dfedff;
+}
+
+.comment-list .list_bottom {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-list .list_bottom span {
+    margin-right: 12px;
+    color: #999;
+}
+
+.comment-list .message-item li{
+    margin-bottom: 20px;
+}
 
 
 
