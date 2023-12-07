@@ -25,7 +25,11 @@
                                         <img src="{{ url_for('blog.static',filename='imgs/dog.jpg') }}" alt="">
                                     </div>
                                     <div class="layui-col-md11" id="rpy{{ reply.id }}">
-                                        <strong>{{ reply.visitor_name }}</strong>
+                                        {% if reply.reply_target_name %}
+                                            <strong>{{ reply.visitor_name }}@{{ reply.reply_target_name }}</strong>
+                                        {% else %}
+                                            <strong>{{ reply.visitor_name }}</strong>
+                                        {% endif %}
                                         <div style="margin: 10px 0">
                                             <p>{{ reply.content }}</p>
                                         </div>
