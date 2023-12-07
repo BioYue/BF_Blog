@@ -4,7 +4,7 @@
         </h3>
         <div class="layui-form" id="comment_board">
             <div class="layui-form-item ">
-            <textarea id="cmt_content" class="layui-textarea" rows="5" cols="30" placeholder="请输入评论内容(●'◡'●)"
+            <textarea id="cmt_content" class="layui-textarea" rows="5" cols="30" placeholder="请输入评论内容 (｡･∀･)ﾉﾞ"
                       name="content" lay-verify="required"></textarea>
             </div>
             <div class="layui-form-item layui-row layui-col-space15">
@@ -39,7 +39,12 @@
                 post_id: '{{ post.id }}'
             }
             $.post('{{ url_for('blog.comment_add') }}', form_data, (res) => {
-                console.log(res)
+                if (res === 'success') {
+                    layer.msg('保存成功', {icon: 1, time: 1500}, () => {
+                        location.reload()
+                        return false;
+                    });
+                }
             })
         })
     })

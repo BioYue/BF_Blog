@@ -1,0 +1,54 @@
+<form class="comment-reply layui-form">
+    <div class="layui-form" id="comment_reply">
+        <div class="layui-form-item ">
+            <textarea id="cmt_content" class="layui-textarea" rows="2" cols="30" placeholder="说点儿什么呢? (｡･∀･)ﾉﾞ"
+                      name="content" lay-verify="required"></textarea>
+        </div>
+        <div class="layui-form-item layui-row layui-col-space15">
+            <div class="layui-col-md9" style="display: flex">
+                <input type="text" id="cmt_author" class="layui-input" placeholder="请输入你的名字" name="name"
+                       lay-verify="required">
+                <input type="text" id="cmt_email" class="layui-input" placeholder="请输入你的邮箱" name="email"
+                       lay-verify="email|required">
+            </div>
+            <div class="layui-col-md3">
+                <button type="button" lay-filter="reply" lay-submit class="layui-btn layui-bg-blue">回复</button>
+                <button type="button" id="rp_cancel" class="layui-btn layui-bg-blue">取消</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    layui.use(() => {
+        let form = layui.form;
+        let $ = layui.$
+
+        // 取消按钮点击事件
+        $('#rp_cancel').click((e)=>{
+            $('.comment-reply').remove()
+        })
+
+        // 回复按钮提交事件
+        form.on('submit(reply)', (data) => {
+            let field = data.field
+            let form_data = {
+                comment: field.content,
+                name: field.name,
+                email: field.email,
+                post_id: '{{ post.id }}',
+                replied_id: reply_comment_id
+            }
+            $.post('{{ url_for('blog.comment_reply') }}', form_data, (res) => {
+                if (res === 'success') {
+                    layer.msg('保存成功', {icon: 1, time: 1500}, () => {
+                        location.reload()
+                        return false;
+                    });
+                }
+            })
+        })
+
+    })
+</script>
