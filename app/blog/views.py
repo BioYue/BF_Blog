@@ -32,13 +32,15 @@ def post(post_id):
     main_comments = Comment.query.filter_by(post_id=post_id, replied_id=None).order_by(Comment.add_time.desc()).all()
     all_comments = []
     for main_comment in main_comments:
+        replies = get_replies(comment_id=main_comment.id)
+        replies = sorted(replies, key=lambda x: x['add_time'], reverse=True)
         comment_data = {
             'id': main_comment.id,
             'content': main_comment.content,
             'visitor_name': main_comment.visitor_name,
             'visitor_address': main_comment.visitor_address,
             'add_time': main_comment.add_time,
-            'replies': get_replies(comment_id=main_comment.id)
+            'replies': replies
         }
         all_comments.append(comment_data)
 
@@ -49,7 +51,7 @@ def post(post_id):
 
 def get_replies(comment_id, reply_target_name=None):
     # 获取特定评论的所有子评论
-    replies = Comment.query.filter_by(replied_id=comment_id).order_by(Comment.add_time).all()
+    replies = Comment.query.filter_by(replied_id=comment_id).all()
 
     # 递归处理子评论的子评论
     reply_data = []
