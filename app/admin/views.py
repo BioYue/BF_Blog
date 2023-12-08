@@ -3,6 +3,7 @@ import os.path
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
 from .models import User
 from app.blog.models import Category, Tag, Post, Attachment
+from app.admin.models import BlogInfo
 from start import db
 import json
 from start.settings import BASE_DIR
@@ -228,4 +229,24 @@ def tag_query():
     return jsonify(data)
 
 
+@bp.route('/about')
+def about():
+    """
+    关于管理-首页
+    :return:
+    """
+    bloginfo = BlogInfo.query.first()
+    about_me_mk = bloginfo.about_me_mk
+    about_me_html = bloginfo.about_me_html
+    return render_template('admin/about.html', **locals())
 
+
+@bp.route('/about_add', methods=['post'])
+def about_add():
+    form_data = request.form
+    content_md = form_data['markdown'],
+    content_html = form_data['html']
+    about_content = BlogInfo(about_me_mk=content_md, about_me_html=content_html)
+    db.session.add(about_content)
+    db.session.commit()
+    return 'success'

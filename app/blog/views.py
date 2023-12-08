@@ -114,10 +114,6 @@ def comment_reply():
     return 'success'
 
 
-from itertools import groupby
-from operator import attrgetter
-
-
 @bp.route('/record')
 def record():
     """
@@ -139,6 +135,7 @@ def note():
     笔记页面
     :return:
     """
+
     return render_template('note.html')
 
 

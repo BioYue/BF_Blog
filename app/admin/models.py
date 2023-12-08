@@ -25,7 +25,8 @@ class User(UserMixin, BaseModel):
 
 class BlogInfo(BaseModel):
     """ 网站信息 """
-    __tablename__ = 'blogInfo_db'
+    __tablename__ = 'blog_info_db'
     title = db.Column(db.String(64), comment='网站标题')
     subtitle = db.Column(db.String(64), comment='网站副标题')
-    about_me = db.Column(db.Text, comment='关于我')
+    about_me_mk = db.Column(db.Text, comment='关于我mk格式')
+    about_me_html = db.Column(db.Text, comment='关于我html格式')
