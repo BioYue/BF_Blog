@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, url_for
-from .models import Post, Comment
+from sqlalchemy import func
+
+from .models import Post, Comment, Message
 from start import db
 from .static.ip2region import search_with_file
 
@@ -43,8 +45,6 @@ def post(post_id):
             'replies': replies
         }
         all_comments.append(comment_data)
-
-    print(all_comments)
 
     return render_template('post.html', **locals())
 
@@ -91,15 +91,6 @@ def comment_add():
     return 'success'
 
 
-@bp.route('/comment_get')
-def comment_get():
-    """
-    获取评论
-    :return:
-    """
-    return 'ok'
-
-
 @bp.route('/comment_reply', methods=['post'])
 def comment_reply():
     """
@@ -123,13 +114,70 @@ def comment_reply():
     return 'success'
 
 
-@bp.route('/test')
-def test():
+from itertools import groupby
+from operator import attrgetter
+
+
+@bp.route('/record')
+def record():
     """
-    测试
+    归档页面
     :return:
     """
-    comment = Comment.query.get(1)
-    print(comment.replies)
+    posts = Post.query.filter_by(draft_flag=False).order_by(Post.add_time.desc()).all()
+    record_list = {}
+    for post in posts:
+        date = str(post.add_time.strftime("%Y-%m"))
+        record_list.setdefault(date, []).append(post)
 
-    return 'ok'
+    return render_template('record.html', **locals())
+
+
+@bp.route('/note')
+def note():
+    """
+    笔记页面
+    :return:
+    """
+    return render_template('note.html')
+
+
+@bp.route('/message')
+def message():
+    """
+    留言页面
+    :return:
+    """
+    messages = Message.query.order_by(Message.add_time.desc()).all()
+    return render_template('message.html', **locals())
+
+
+@bp.route('/message_add', methods=['post'])
+def message_add():
+    """
+    留言添加-API
+    :return:
+    """
+    form_data = request.form
+    visitor_ip = request.remote_addr
+    visitor_address = search_with_file(visitor_ip)
+    message = Message(
+        content=form_data['comment'],
+        visitor_name=form_data['name'],
+        visitor_email=form_data['email'],
+        visitor_ip=visitor_ip,
+        visitor_address=visitor_address,
+    )
+    db.session.add(message)
+    db.session.commit()
+    return 'success'
+
+
+@bp.route('/about')
+def about():
+    """
+    关于页面
+    :return:
+    """
+
+    return render_template('about.html')

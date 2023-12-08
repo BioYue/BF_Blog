@@ -28,19 +28,19 @@
                 <span>天青色等烟雨 而我在等你</span>
                 <ul class="layui-nav layui-layout-right">
                     <li class="layui-nav-item">
-                        <a href="/app/blog/static">首页</a>
+                        <a href="/">首页</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="#">归档</a>
+                        <a href="{{ url_for('blog.record') }}">归档</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="#">笔记</a>
+                        <a href="{{ url_for('blog.note') }}">笔记</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="#">留言</a>
+                        <a href="{{ url_for('blog.message') }}">留言</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="#">关于</a>
+                        <a href="{{ url_for('blog.about') }}">关于</a>
                     </li>
                 </ul>
             </div>

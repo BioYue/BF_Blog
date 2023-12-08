@@ -84,7 +84,7 @@ class Comment(BaseModel):
 class Message(BaseModel):
     """ 留言表 """
     __tablename__ = 'message_db'
-    content = db.Column(db.Text, comment='评论内容')
+    content = db.Column(db.Text, comment='留言内容')
     visitor_name = db.Column(db.String(64), comment='游客名')
     visitor_email = db.Column(db.String(64), comment='游客邮箱')
     visitor_ip = db.Column(db.String(50), comment='游客ip')
