@@ -1,0 +1,117 @@
+{% extends 'admin/common/base.html' %}
+
+{% block title %}
+    关于 - 北枫小站
+{% endblock %}
+
+{% block main_title %}
+    关于
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/toastui-editor.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/prism.min.css') }}">
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css"/>
+    <link rel="stylesheet"
+          href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css"/>
+    <script type="text/javascript"
+            src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-all.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/latest/zh-cn.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight-all.js') }}"></script>
+    <script type="text/javascript"
+            src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
+    <script type="text/javascript"
+            src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div id="editor"></div>
+    <div class="about_bottom">
+        <button type="button" id="publish" class="layui-btn layui-bg-blue">发布关于</button>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('admin.static', filename='editor/activate-power-mode.js') }}"></script>
+    <script>
+        POWERMODE.colorful = true; // ture 为启用礼花特效
+        POWERMODE.shake = false; // false 为禁用震动特效
+        document.body.addEventListener('input', POWERMODE);
+    </script>
+    <script>
+        layui.use(() => {
+            let $ = layui.$;
+            let layer = layui.layer;
+            let plugin = toastui.Editor.plugin
+            let editor = new toastui.Editor({
+                el: document.querySelector('#editor'),
+                initialEditType: 'markdown',
+                previewStyle: 'vertical',
+                height: '700px',
+                language: 'zh-CN',
+                plugins: [plugin.codeSyntaxHighlight, plugin.colorSyntax],
+                initialValue: '{{ about_me_mk }}',
+
+                hooks: {
+                    addImageBlobHook: (blob, callback) => {
+                        console.log(blob)
+                        uploadImage(blob, function (imageUrl) {
+                            callback(imageUrl); // 将链接传递给编辑器
+                        }, function (error) {
+                            console.error('图片上传失败：', error);
+                        });
+                    },
+                }
+            });
+
+            function uploadImage(imageBlob, successCallback, errorCallback) {
+                let formData = new FormData();
+                formData.append('file', imageBlob);
+                formData.append('name', imageBlob.name === 'image.png' ? imageBlob.lastModified + '.png' : imageBlob.name);
+                formData.append('size', imageBlob.size.toString());
+                $.ajax({
+                    url: '{{ url_for('admin.upload') }}',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.url !== '') {
+                            successCallback(data.url);
+                        } else {
+                            errorCallback('图片上传失败');
+                        }
+                    },
+                    error: function () {
+                        errorCallback('图片上传失败');
+                    }
+                });
+            }
+
+            $('#publish').click(() => {
+                let html = editor.getHTML()
+                let markdown = editor.getMarkdown()
+
+                let form_data = {
+                    html: html,
+                    markdown: markdown
+                }
+
+                $.post('{{ url_for('admin.about_add') }}', form_data, (res) => {
+                        if (res === 'success') {
+                            layer.msg('保存成功', {icon: 1, time: 1500}, () => {
+                                window.location.href = '{{ url_for('admin.post') }}';
+                                return false;
+                            });
+                        }
+                    }
+                )
+            })
+        })
+    </script>
+{% endblock script %}

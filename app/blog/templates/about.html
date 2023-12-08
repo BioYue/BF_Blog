@@ -1,8 +1,11 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-	<div class="layui-container">
-        <div class="comment">
+    <div class="layui-container">
+        <div class="comment" style="margin: 20px 0;">
+            <div class="post-content" style="padding: 20px 40px;">
+                {{ about_me_html | safe }}
+            </div>
         </div>
     </div>
 {% endblock %}

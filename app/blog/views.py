@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, url_for
 from sqlalchemy import func
 
 from .models import Post, Comment, Message
+from app.admin.models import BlogInfo
 from start import db
 from .static.ip2region import search_with_file
 
@@ -176,5 +177,6 @@ def about():
     关于页面
     :return:
     """
-
-    return render_template('about.html')
+    bloginfo = BlogInfo.query.first()
+    about_me_html = bloginfo.about_me_html
+    return render_template('about.html', **locals())
