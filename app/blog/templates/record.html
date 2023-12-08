@@ -1,0 +1,40 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="layui-container">
+        <div class="layui-row layui-col-space15">
+
+            <div class="layui-col-md9">
+                {% if not record_list.items() %}
+                    <div class="post-card">
+                        <p style="margin-top: 30px;font-size:15px;text-align: center">一片文章也没有呢~</p>
+                    </div>
+                {% else %}
+                    <div class="record-list">
+                        {% for key,value in record_list.items() %}
+                            <div class="layui-timeline-item">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="layui-timeline-content layui-text">
+                                    <h3 class="layui-timeline-title">{{ key }}</h3>
+
+                                    <ul style="padding-left: 0">
+                                    {% for val in value %}
+                                        <li style="list-style-type: none"><i class="layui-icon">&#xe60a;</i>&nbsp<a
+                                                href="{{ url_for('blog.post',post_id=val.id) }}">{{ val.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="layui-col-md3">
+                {% include 'common/sidebar.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
