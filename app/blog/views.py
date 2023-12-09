@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for
+from flask import Blueprint, render_template, request, url_for, jsonify
 from sqlalchemy import func
 
 from .models import Post, Comment, Message
@@ -10,8 +10,39 @@ from .static.ip2region import search_with_file
 bp = Blueprint('blog', __name__, url_prefix='/blog', template_folder='templates', static_folder='static')
 
 
-def index():
-    return render_template('index.html')
+@bp.route('/index/<int:page>')
+def index(page=1):
+    post_pg = Post.query.paginate(page=page, per_page=5)
+    count = post_pg.total
+    return render_template('index.html', **locals())
+
+
+@bp.route('/post_query', methods=['post'])
+def post_query():
+    page = request.args.get('page', type=int, default=1)  # 当前页
+    limit = request.args.get('limit', type=int, default=5)  # 一页条数
+    post_pg = Post.query.paginate(page=page, per_page=limit)
+
+    post_list = []
+    for item in post_pg.items:
+        row = {
+            'id': item.id,
+            'title': item.title,
+            'cover': item.cover,
+            'read_count': item.read_count,
+            'category': item.category.name,
+            'add_time': item.add_time.strftime("%Y-%m-%d"),
+            'upd_time': item.upd_time.strftime("%Y-%m-%d")
+        }
+        post_list.append(row)
+
+    data = {
+        'code': 0,
+        'data': post_list,  # 实际数据
+        'count': post_pg.total,  # 数据总数
+        'msg': ''
+    }
+    return jsonify(data)
 
 
 @bp.route('/post/<int:post_id>')

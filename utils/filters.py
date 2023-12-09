@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 
 
 def strftime(date):
@@ -17,8 +18,15 @@ def address(data):
     return list_[2] + list_[3]
 
 
+def remove_html_tags(text):
+    # 去除文章内容的html标签
+    clean = re.compile('<.*?>')
+    return re.sub(clean, '', text)
+
+
 FILTERS = {
     'strftime': strftime,
     'strftime_comment': strftime_comment,
-    'address': address
+    'address': address,
+    'remove_html_tags': remove_html_tags
 }

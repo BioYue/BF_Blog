@@ -290,6 +290,13 @@ body::after {
     color: #909399;
 }
 
+.clamp-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 
 /* ------------ 文章详情页内容样式 ------------ */
 /*正文页标题*/
@@ -473,26 +480,26 @@ body::after {
     color: #999;
 }
 
-.comment-list .message-item li{
+.comment-list .message-item li {
     margin-bottom: 10px;
 }
 
 
 /* ------------ 评论回复盒子样式 ------------ */
-.comment-reply{
-padding-right: 60px;
+.comment-reply {
+    padding-right: 60px;
 }
 
-.comment-reply input{
+.comment-reply input {
     margin-right: 15px;
 }
 
-.comment-reply .layui-col-md3{
+.comment-reply .layui-col-md3 {
     display: flex;
     justify-content: space-between;
 }
 
-.comment-reply button{
+.comment-reply button {
     width: 45%;
 }
 
@@ -502,7 +509,7 @@ padding-right: 60px;
     background-color: #fff;
     padding: 20px 30px;
     border-radius: 8px;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
 .record-list p a {
@@ -515,7 +522,7 @@ padding-right: 60px;
     margin: 5px 25px;
 }
 
-.record-list li a{
+.record-list li a {
     color: #227eaa;
 }
 

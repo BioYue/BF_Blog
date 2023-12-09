@@ -40,6 +40,6 @@ def create_app():
     for key, value in FILTERS.items():
         app.add_template_filter(value, key)
 
-    # 注册首页url规则
+    # 注册首页url规则  endpoint指定端点名称  view_func指定视图函数
     app.add_url_rule(rule='/', endpoint='index', view_func=blog.index)
     return app
