@@ -398,7 +398,7 @@ body::after {
 
 
 /* ------------ 评论发送内容样式 ------------ */
-.comment, .comment-list {
+.comment_bf, .comment-list {
     background-color: #fff;
     box-sizing: border-box;
     padding: 5px 20px;
@@ -409,41 +409,41 @@ body::after {
 }
 
 /*留言页标题样式*/
-.comment .comment-title {
+.comment_bf .comment-title {
     text-align: center;
 }
 
 /*留言内容样式*/
-.comment .comment-edit {
+.comment_bf .comment-edit {
     padding: 0 18px;
     border-radius: 8px;
 }
 
-.comment .comment-edit h3 {
+.comment_bf .comment-edit h3 {
     margin: 20px 0;
     font-weight: 500;
 }
 
 /*留言列表底部间距*/
-.comment .comment-item li {
+.comment_bf .comment-item li {
     margin-bottom: 20px;
 }
 
 
-.comment-send {
+.layui-container .comment-send {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
 }
 
-.comment-send h3 {
+.layui-container .comment-send h3 {
     position: relative;
     padding-left: 1.2em;
     font-size: 15px;
 }
 
-.comment-send h3:before {
+.layui-container .comment-send h3:before {
     position: absolute;
     content: '';
     width: 4px;
