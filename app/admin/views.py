@@ -236,17 +236,32 @@ def about():
     :return:
     """
     bloginfo = BlogInfo.query.first()
-    about_me_mk = bloginfo.about_me_mk
-    about_me_html = bloginfo.about_me_html
+
+    if bloginfo and bloginfo.about_me_mk:
+        about_me_mk = bloginfo.about_me_mk
+        json.dumps(about_me_mk)
+        print(json.dumps(about_me_mk))
     return render_template('admin/about.html', **locals())
 
 
 @bp.route('/about_add', methods=['post'])
 def about_add():
+    """
+    关于管理-添加API
+    :return:
+    """
     form_data = request.form
     content_md = form_data['markdown'],
     content_html = form_data['html']
-    about_content = BlogInfo(about_me_mk=content_md, about_me_html=content_html)
-    db.session.add(about_content)
+    # 查询是否已存在记录
+    existing_record = BlogInfo.query.first()
+
+    if existing_record:
+        existing_record.about_me_mk = content_md
+        existing_record.about_me_html = content_html
+    else:
+        about_content = BlogInfo(about_me_mk=content_md, about_me_html=content_html)
+        db.session.add(about_content)
+
     db.session.commit()
     return 'success'

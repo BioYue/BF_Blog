@@ -10,21 +10,15 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/toastui-editor.min.css') }}">
-    <link rel="stylesheet"
-          href="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/prism.min.css') }}">
-    <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css"/>
-    <link rel="stylesheet"
-          href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css"/>
-    <script type="text/javascript"
-            src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-all.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/tui-color-picker/tui-color-picker.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename='editor/latest/toastui-editor-plugin-color-syntax.min.css') }}">
+    <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-all.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/latest/zh-cn.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight-all.js') }}"></script>
-    <script type="text/javascript"
-            src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
-    <script type="text/javascript"
-            src="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-highlight-all.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/tui-color-picker/tui-color-picker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('admin.static', filename='editor/latest/toastui-editor-plugin-color-syntax.min.js') }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -44,6 +38,7 @@
         document.body.addEventListener('input', POWERMODE);
     </script>
     <script>
+
         layui.use(() => {
             let $ = layui.$;
             let layer = layui.layer;
@@ -55,7 +50,7 @@
                 height: '700px',
                 language: 'zh-CN',
                 plugins: [plugin.codeSyntaxHighlight, plugin.colorSyntax],
-                initialValue: '{{ about_me_mk }}',
+                initialValue: '{{ about_me_mk | tojson | safe }}'.slice(1, -1),
 
                 hooks: {
                     addImageBlobHook: (blob, callback) => {

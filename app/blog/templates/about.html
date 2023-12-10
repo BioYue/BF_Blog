@@ -1,5 +1,14 @@
 {% extends 'common/base.html' %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('blog.static', filename='prism/themes/prism-one-dark.css') }}">
+    <script type="text/javascript" src="{{ url_for('blog.static', filename='prism/prism.js') }}"></script>
+    <link rel="stylesheet"
+          href="{{ url_for('blog.static', filename='prism/plugins/line-numbers/prism-line-numbers.min.css') }}">
+    <script type="text/javascript"
+            src="{{ url_for('blog.static', filename='prism/plugins/line-numbers/prism-line-numbers.min.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <div class="layui-container">
         <div class="comment" style="margin: 20px 0;">
@@ -8,4 +17,19 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        // 代码块行号展示
+        layui.jquery('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+        layui.use(function () {
+            let util = layui.util;
+            // 自定义固定条
+            util.fixbar({
+                bgcolor: '#b0bbc0',
+                css: {right: 40, bottom: 70},
+            });
+        });
+    </script>
 {% endblock %}

@@ -49,14 +49,14 @@
             let laypage = layui.laypage;
             laypage.render({
                 elem: 'demo-laypage-theme-1',
-                curr: '{{ page }}',
+                curr: '{{ curr }}',
                 count: '{{ count }}',
                 theme: '#1E9FFF',
                 limit: 5,
                 jump: (obj, first) => {
                     // 首次不执行
                     if (!first) {
-                        window.location.href = `/blog/index/${obj.curr}`
+                        window.location.href = `/blog/page/${obj.curr}`
                         console.log(obj.curr)
                         console.log(obj.limit)
                     }

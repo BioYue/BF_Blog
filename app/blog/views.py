@@ -10,9 +10,9 @@ from .static.ip2region import search_with_file
 bp = Blueprint('blog', __name__, url_prefix='/blog', template_folder='templates', static_folder='static')
 
 
-@bp.route('/index/<int:page>')
-def index(page=1):
-    post_pg = Post.query.paginate(page=page, per_page=5)
+@bp.route('/page/<int:curr>')
+def index(curr=1):
+    post_pg = Post.query.paginate(page=curr, per_page=5)
     count = post_pg.total
     return render_template('index.html', **locals())
 
