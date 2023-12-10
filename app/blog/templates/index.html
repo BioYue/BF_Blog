@@ -46,29 +46,21 @@
 {% block script %}
     <script>
         layui.use(function () {
-            let $ = layui.jquery
-            let count
             let laypage = layui.laypage;
             laypage.render({
                 elem: 'demo-laypage-theme-1',
-                curr: location.hash.replace('#!curr=', 'page'),
-                hash: 'curr',
+                curr: '{{ page }}',
                 count: '{{ count }}',
                 theme: '#1E9FFF',
                 limit: 5,
                 jump: (obj, first) => {
-                    console.log(location.hash.replace('#!curr=', ''))
-                    {#console.log('{{ url_for('blog.index', page=2) }}')#}
-                    {#console.log('{{ url_for('blog', page=obj.curr) }}')#}
                     // 首次不执行
                     if (!first) {
-                        {#window.location.href = '{{ url_for('blog', obj.curr) }}';#}
-
+                        window.location.href = `/blog/index/${obj.curr}`
                         console.log(obj.curr)
                         console.log(obj.limit)
                     }
                 }
-
             });
         });
     </script>
