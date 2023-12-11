@@ -2,7 +2,7 @@ import os.path
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
 from .models import User
-from app.blog.models import Category, Tag, Post, Attachment
+from app.blog.models import Category, Tag, Post, Attachment, Note
 from app.admin.models import BlogInfo
 from start import db
 import json
@@ -174,7 +174,7 @@ def category_query():
 
 
 @bp.route('/tag')
-def note():
+def tag():
     """
     标签管理-首页
     :return:
@@ -265,3 +265,73 @@ def about_add():
 
     db.session.commit()
     return 'success'
+
+
+@bp.route('/note')
+def note():
+    """
+    笔记管理-首页
+    :return:
+    """
+    return render_template('admin/note.html')
+
+
+@bp.route('/editor_note')
+def editor_note():
+    """
+    笔记管理-编辑笔记页
+    :return:
+    """
+    category_list = Category.query.all()
+    tag_list = Tag.query.all()
+    return render_template('admin/editor_note.html', **locals())
+
+
+@bp.route('/note_add', methods=['post'])
+def note_add():
+    form_data = request.form
+    tags = json.loads(form_data['tags'])
+    tags_obj = [Tag.query.get(tag_id) for tag_id in list(tags.keys())]
+
+    note_obj = Note(
+        title=form_data['title'],
+        content_md=form_data['markdown'],
+        content_html=form_data['html'],
+        category_id=form_data['category'],
+        tags=tags_obj
+    )
+
+    db.session.add(note_obj)
+    db.session.commit()
+    return 'success'
+
+
+@bp.route('/note_query')
+def note_query():
+    """
+    笔记管理-查询笔记API
+    :return:
+    """
+    page = request.args.get('page', type=int, default=1)  # 当前页
+    limit = request.args.get('limit', type=int, default=10)  # 一页条数
+    note_pg = Note.query.paginate(page=page, per_page=limit)
+
+    note_list = []
+    for item in note_pg.items:
+        row = {
+            'id': item.id,
+            'title': item.title,
+            'read_count': item.read_count,
+            'category': item.category.name,
+            'add_time': item.add_time.strftime("%Y-%m-%d"),
+            'upd_time': item.upd_time.strftime("%Y-%m-%d")
+        }
+        note_list.append(row)
+
+    data = {
+        'code': 0,
+        'data': note_list,  # 实际数据
+        'count': note_pg.total,  # 数据总数
+        'msg': ''
+    }
+    return jsonify(data)
