@@ -1,11 +1,53 @@
 {% extends 'common/base.html' %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('blog.static', filename='prism/themes/prism-one-dark.css') }}">
+    <script type="text/javascript" src="{{ url_for('blog.static', filename='prism/prism.js') }}"></script>
+    <link rel="stylesheet"
+          href="{{ url_for('blog.static', filename='prism/plugins/line-numbers/prism-line-numbers.min.css') }}">
+    <script type="text/javascript"
+            src="{{ url_for('blog.static', filename='prism/plugins/line-numbers/prism-line-numbers.min.js') }}"></script>
+    <meta name="referrer" content="no-referrer"/>
+{% endblock %}
+
 {% block content %}
     <div class="layui-container">
         <div class="layui-row layui-col-space15">
 
             <div class="layui-col-md9">
+                {% for note in note_pg %}
+                    <div class="post-card">
+                        <h2>{{ note.title }}</h2>
+                        <div class="post-content">{{ note.content_html | safe }}</div>
+                        <div class="post-msg">
 
+                            <span>
+                                <i class="layui-icon">&#xe612;</i>
+                                <span class="author">枫_Sir</span>
+                            </span>
+                            <span>
+                                <i class="layui-icon">&#xe705;</i>
+                                <a href="#" class="category">{{ note.category.name }}</a>
+                            </span>
+                            <span>
+                                <i class="layui-icon">&#xe68d;</i>
+                                <span class="post-info">{{ note.add_time | strftime_comment }}</span>
+                            </span>
+                            <span>
+                            {% if note.tags %}
+                                <i class="layui-icon">&#xe674;</i>
+                                {% for tag in note.tags %}
+                                    <a class="layui-btn layui-btn-xs layui-btn-primary" href="#"
+                                       style="color: {{ tag.color }}; margin-left: 4px; margin-bottom: 2px">{{ tag.name }}</a>
+                                {% endfor %}
+                            {% endif %}
+                            </span>
+
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div id="demo-laypage-theme-1"></div>
             </div>
 
             <div class="layui-col-md3">
@@ -13,4 +55,35 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        // 代码块行号展示
+        layui.jquery('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+        layui.use(function () {
+            let util = layui.util;
+            let laypage = layui.laypage;
+            // 自定义固定条
+            util.fixbar({
+                bgcolor: '#b0bbc0',
+            });
+
+            laypage.render({
+                elem: 'demo-laypage-theme-1',
+                curr: '{{ curr }}',
+                count: '{{ count }}',
+                theme: '#1E9FFF',
+                limit: 5,
+                jump: (obj, first) => {
+                    // 首次不执行
+                    if (!first) {
+                        window.location.href = `/blog/note/${obj.curr}`
+                        console.log(obj.curr)
+                        console.log(obj.limit)
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock %}

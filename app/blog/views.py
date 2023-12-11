@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, url_for, jsonify
 from sqlalchemy import func
 
-from .models import Post, Comment, Message
+from .models import Post, Comment, Message, Note
 from app.admin.models import BlogInfo
 from start import db
 from .static.ip2region import search_with_file
@@ -161,14 +161,16 @@ def record():
     return render_template('record.html', **locals())
 
 
+@bp.route('/note/<int:curr>')
 @bp.route('/note')
-def note():
+def note(curr=1):
     """
     笔记页面
     :return:
     """
-
-    return render_template('note.html')
+    note_pg = Note.query.paginate(page=curr, per_page=5)
+    count = note_pg.total
+    return render_template('note.html', **locals())
 
 
 @bp.route('/message')
