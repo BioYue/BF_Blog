@@ -1,10 +1,25 @@
 <div class="side-search layui-hide-xs">
-    <form class="layui-form" method="post" action="">
+    <form class="layui-form">
         <div class="layui-inline">
-            <input class="layui-input" type="text" placeholder="请输入关键词">
+            <input class="layui-input" name="word" lay-verify="required" lay-reqtext="请输入搜索关键词" type="text"
+                   placeholder="请输入关键词">
         </div>
         <div class="layui-inline">
-            <button class="layui-btn layui-btn-sm layui-btn-primary" style="border-radius: 4px"><i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" lay-filter="search" lay-submit
+                    style="border-radius: 4px"><i
+                    class="layui-icon">&#xe615;</i></button>
         </div>
     </form>
 </div>
+
+<script>
+    layui.use(function () {
+        let form = layui.form;
+        form.on('submit(search)', (data) => {
+            let field = data.field;
+            let route = '{{ current_route }}' ? '{{ current_route }}' : 'post'
+            window.location.href = `/blog/${route}_search?word=${field.word}`
+            return false; // 阻止默认 form 跳转
+        });
+    });
+</script>

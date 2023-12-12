@@ -1,0 +1,70 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <div class="layui-container">
+        <div class="layui-row layui-col-space15">
+            {# 中心区内容 #}
+            <div class="layui-col-md9">
+                {% for post in post_pg %}
+                    <div class="post-card">
+                        <h2><a style="color: #227eaa;"
+                               href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                        <div class="clamp-text">{{ post.content_html | remove_html_tags }}</div>
+                        <div class="post-msg">
+                        <span>
+                            <i class="layui-icon">&#xe612;</i>
+                            <span class="author">枫_Sir</span>
+                        </span>
+                            <span>
+                            <i class="layui-icon">&#xe705;</i>
+                            <a href="#" class="category">{{ post.category.name }}</a>
+                        </span>
+                            <span>
+                            <i class="layui-icon">&#xe68d;</i>
+                            <span class="post-info">{{ post.add_time | strftime_comment }}</span>
+                        </span>
+                            <span>
+                            <i class="layui-icon">&#xe62c;</i>
+                            <span class="post-info">{{ post.read_count }}</span>
+                        </span>
+                            <span>
+                            <a href="{{ url_for('blog.post', post_id=post.id) }}" class="detail">阅读全文</a>
+                        </span>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div id="demo-laypage-theme-1"></div>
+            </div>
+            {# 右边侧边栏 #}
+            <div class="layui-col-md3">
+                {% include 'common/sidebar.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        layui.use(function () {
+            let laypage = layui.laypage;
+            laypage.render({
+                elem: 'demo-laypage-theme-1',
+                curr: '{{ page }}',
+                count: '{{ count }}',
+                theme: '#1E9FFF',
+                limit: '{{ limit }}',
+                jump: (obj, first) => {
+                    console.log(22222)
+                    // 首次不执行
+                    if (!first) {
+                        let word = '{{ word }}'
+                        let route = '{{ current_route }}'
+                        window.location.href = `/blog/${route}_search?word=${word}&page=${obj.curr}`
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+

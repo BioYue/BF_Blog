@@ -1,6 +1,5 @@
 from pathlib import Path
 import requests
-import re
 
 
 def spider_bing():

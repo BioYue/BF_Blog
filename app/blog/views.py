@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, jsonify
-from sqlalchemy import func
+from sqlalchemy import or_
 
 from .models import Post, Comment, Message, Note
 from app.admin.models import BlogInfo
@@ -17,32 +17,30 @@ def index(curr=1):
     return render_template('index.html', **locals())
 
 
-@bp.route('/post_query', methods=['post'])
-def post_query():
-    page = request.args.get('page', type=int, default=1)  # 当前页
-    limit = request.args.get('limit', type=int, default=5)  # 一页条数
-    post_pg = Post.query.paginate(page=page, per_page=limit)
+@bp.route('/post_search')
+@bp.route('/note_search')
+def search():
+    """
+    文章搜索API
+    :return:
+    """
+    page = request.args.get('page', type=int, default=1)
+    limit = request.args.get('limit', type=int, default=5)
+    word = request.args.get('word')
 
-    post_list = []
-    for item in post_pg.items:
-        row = {
-            'id': item.id,
-            'title': item.title,
-            'cover': item.cover,
-            'read_count': item.read_count,
-            'category': item.category.name,
-            'add_time': item.add_time.strftime("%Y-%m-%d"),
-            'upd_time': item.upd_time.strftime("%Y-%m-%d")
-        }
-        post_list.append(row)
+    current_route = request.url_rule.rule.split('/')[-1].split('_')[0]
 
-    data = {
-        'code': 0,
-        'data': post_list,  # 实际数据
-        'count': post_pg.total,  # 数据总数
-        'msg': ''
-    }
-    return jsonify(data)
+    if current_route == 'note':
+        base_query = Note.query.filter(or_(Note.title.ilike(f"%{word}%"), Note.content_md.ilike(f"%{word}%")))
+    else:
+        base_query = Post.query.filter(or_(Post.title.ilike(f"%{word}%"), Post.content_md.ilike(f"%{word}%")))
+
+    post_pg = base_query.paginate(page=page, per_page=limit)
+    count = post_pg.total
+
+    print(count)
+
+    return render_template('search.html', **locals())
 
 
 @bp.route('/post/<int:post_id>')
@@ -170,6 +168,7 @@ def note(curr=1):
     """
     note_pg = Note.query.paginate(page=curr, per_page=5)
     count = note_pg.total
+    current_route = 'note'
     return render_template('note.html', **locals())
 
 
