@@ -1,5 +1,3 @@
-import os.path
-
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
 from .models import User
 from app.blog.models import Category, Tag, Post, Attachment, Note

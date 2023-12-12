@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from utils.filters import FILTERS
+from flask_apscheduler import APScheduler
+
 
 # 实例化SQLAlchemy对象
 db = SQLAlchemy()
@@ -10,6 +12,8 @@ db = SQLAlchemy()
 migrate = Migrate()
 # 实例化login管理
 login_manager = LoginManager()
+# 实例化调度器
+scheduler = APScheduler()
 
 
 def create_app():
@@ -42,4 +46,10 @@ def create_app():
 
     # 注册首页url规则  endpoint指定端点名称  view_func指定视图函数
     app.add_url_rule(rule='/', endpoint='index', view_func=blog.index)
+
+    # 注册调度器
+    scheduler.init_app(app)
+    # 启动调度器
+    scheduler.start()
+
     return app
