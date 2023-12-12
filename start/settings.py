@@ -23,7 +23,7 @@ JOBS = [
         'args': None,  # 执行程序参数
         'trigger': 'cron',
         'second': '0',
-        'minute': '37',
+        'minute': '52',
         'hour': '18'
     }
 ]
