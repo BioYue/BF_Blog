@@ -1,28 +1,81 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
-from .models import User
 from app.blog.models import Category, Tag, Post, Attachment, Note
-from app.admin.models import BlogInfo
-from start import db
-import json
+from app.admin.models import BlogInfo, User
+from start import db, login_manager
 from start.settings import BASE_DIR
+from werkzeug.security import check_password_hash
+from flask_login import login_user, login_required, logout_user
+import json
 
 # 实例化蓝图
 bp = Blueprint('admin', __name__, url_prefix='/bf_admin', template_folder='templates', static_folder='static')
 
 
-# 后台登录页
-@bp.route('/login')
+# 加载用户的回调函数
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+@bp.route('/login', methods=['get', 'post'])
 def login():
-    return '后台登录页'
+    """
+    后台管理-登录页+校验API
+    :return:
+    """
+    if request.method == 'GET':
+        return render_template('admin/login.html')
+
+    username = request.form['username']
+    password = request.form['password']
+    user = User.query.filter_by(username=username).first()
+    if user and check_password_hash(user.password, password):
+        login_user(user)
+        return redirect(url_for('admin.index'))
+    else:
+        flash('Invalid user ID.', 'error')
+
+    return 'Bad login'
+
+
+@bp.route('/logout')
+@login_required
+def logout():
+    """
+    后台管理-退出登录
+    :return:
+    """
+    logout_user()
+    return redirect(url_for('admin.login'))
+
+
+from werkzeug.security import generate_password_hash
+
+
+# @bp.route('/register')
+# def register():
+#     """
+#     用户注册临时API
+#     :return:
+#     """
+#     username = 'admin'
+#     password = 'bf123456'
+#     password_hash = generate_password_hash(password, method='pbkdf2:sha256:600000')
+#     user = User(username=username, password=password_hash)
+#     db.session.add(user)
+#     db.session.commit()
+#     return 'ok'
 
 
 # 后台首页
 @bp.route('/')
+@login_required
 def index():
     return render_template('admin/index.html')
 
 
 @bp.route('/post')
+@login_required
 def post():
     """
     文章管理-首页
@@ -32,6 +85,7 @@ def post():
 
 
 @bp.route('/editor_post')
+@login_required
 def editor_post():
     """
     文章管理-编辑文章页
@@ -43,6 +97,7 @@ def editor_post():
 
 
 @bp.route('/post_add', methods=['post'])
+@login_required
 def post_add():
     """
     文章管理-新增文章API
@@ -71,6 +126,7 @@ def post_add():
 
 
 @bp.route('/post_query')
+@login_required
 def post_query():
     """
     文章管理-查询文章API
@@ -102,6 +158,7 @@ def post_query():
 
 
 @bp.route('/upload', methods=['post'])
+@login_required
 def upload():
     """
     文章管理-资源上传API
@@ -119,6 +176,7 @@ def upload():
 
 
 @bp.route('/category')
+@login_required
 def category():
     """
     分类管理-首页
@@ -128,6 +186,7 @@ def category():
 
 
 @bp.route('/category_add', methods=['post'])
+@login_required
 def category_add():
     """
     分类管理-新增分类API
@@ -144,6 +203,7 @@ def category_add():
 
 
 @bp.route('/category_query')
+@login_required
 def category_query():
     """
     分类管理-查询分类API
@@ -172,6 +232,7 @@ def category_query():
 
 
 @bp.route('/tag')
+@login_required
 def tag():
     """
     标签管理-首页
@@ -181,6 +242,7 @@ def tag():
 
 
 @bp.route('/tag_add', methods=['post'])
+@login_required
 def tag_add():
     """
     标签管理-新增标签API
@@ -199,6 +261,7 @@ def tag_add():
 
 
 @bp.route('/tag_query')
+@login_required
 def tag_query():
     """
     标签管理-查询标签API
@@ -228,6 +291,7 @@ def tag_query():
 
 
 @bp.route('/about')
+@login_required
 def about():
     """
     关于管理-首页
@@ -243,6 +307,7 @@ def about():
 
 
 @bp.route('/about_add', methods=['post'])
+@login_required
 def about_add():
     """
     关于管理-添加API
@@ -266,6 +331,7 @@ def about_add():
 
 
 @bp.route('/note')
+@login_required
 def note():
     """
     笔记管理-首页
@@ -275,6 +341,7 @@ def note():
 
 
 @bp.route('/editor_note')
+@login_required
 def editor_note():
     """
     笔记管理-编辑笔记页
@@ -286,6 +353,7 @@ def editor_note():
 
 
 @bp.route('/note_add', methods=['post'])
+@login_required
 def note_add():
     form_data = request.form
     tags = json.loads(form_data['tags'])
@@ -305,6 +373,7 @@ def note_add():
 
 
 @bp.route('/note_query')
+@login_required
 def note_query():
     """
     笔记管理-查询笔记API

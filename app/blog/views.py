@@ -21,7 +21,7 @@ def index(curr=1):
 @bp.route('/note_search')
 def search():
     """
-    文章搜索API
+    搜索API
     :return:
     """
     page = request.args.get('page', type=int, default=1)
@@ -37,8 +37,6 @@ def search():
 
     post_pg = base_query.paginate(page=page, per_page=limit)
     count = post_pg.total
-
-    print(count)
 
     return render_template('search.html', **locals())
 

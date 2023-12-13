@@ -4,16 +4,22 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from utils.filters import FILTERS
 from flask_apscheduler import APScheduler
+from flask_wtf import CSRFProtect
 
 
 # 实例化SQLAlchemy对象
 db = SQLAlchemy()
 # 实例化迁移对象
 migrate = Migrate()
-# 实例化login管理
-login_manager = LoginManager()
 # 实例化调度器
 scheduler = APScheduler()
+# 实例化WTF
+csrf = CSRFProtect()
+
+# 实例化login管理
+login_manager = LoginManager()
+login_manager.login_message = 'Access denied.'
+login_manager.login_view = 'admin.login'
 
 
 def create_app():
@@ -33,8 +39,6 @@ def create_app():
     db.init_app(app)
     # 注册迁移对象
     migrate.init_app(app, db)
-    # 注册login管理
-    # login_manager.init_app(app)
 
     # 注册模型
     from app.blog import models
@@ -51,5 +55,11 @@ def create_app():
     scheduler.init_app(app)
     # 启动调度器
     scheduler.start()
+
+    # 注册login管理
+    login_manager.init_app(app)
+
+    # 注册wtf
+    csrf.init_app(app)
 
     return app
