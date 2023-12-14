@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, url_for, jsonify
 from sqlalchemy import or_
 
-from .models import Post, Comment, Message, Note
+from .models import Post, Comment, Message, Note, Category, Tag
 from app.admin.models import BlogInfo
 from start import db
 from .static.ip2region import search_with_file
@@ -13,6 +13,8 @@ bp = Blueprint('blog', __name__, url_prefix='/blog', template_folder='templates'
 @bp.route('/page/<int:curr>')
 def index(curr=1):
     post_pg = Post.query.paginate(page=curr, per_page=5)
+    category_list = Category.query.all()
+    tag_list = Tag.query.all()
     count = post_pg.total
     return render_template('index.html', **locals())
 
