@@ -228,6 +228,13 @@ body::after {
     word-break: break-all;
 }
 
+.side-newposts li{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 /* --- 文章标签样式 --- */
 .side-tags {
     background-color: #fff;

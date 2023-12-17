@@ -4,18 +4,11 @@
         最新文章
     </h3>
     <ul class="layui-row layui-col-space5">
-        <!-- 显示5篇最新文章 -->
-        <li class="layui-col-md12 layui-col-xs6">
-            <i class="layui-icon">&#xe60a;</i>
-            Flask个人博客实战
-        </li>
-        <li class="layui-col-md12 layui-col-xs6">
-            <i class="layui-icon">&#xe60a;</i>
-            Django简易聊天
-        </li>
-        <li class="layui-col-md12 layui-col-xs6">
-            <i class="layui-icon">&#xe60a;</i>
-            P2接口加密通信协议详解
-        </li>
+        {% for latest_post in latest_posts %}
+            <li class="layui-col-md12 layui-col-xs6">
+                <i class="layui-icon">&#xe60a;</i>
+                {{ latest_post.title }}
+            </li>
+        {% endfor %}
     </ul>
 </div>

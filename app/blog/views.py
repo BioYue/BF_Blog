@@ -13,6 +13,7 @@ bp = Blueprint('blog', __name__, url_prefix='/blog', template_folder='templates'
 @bp.route('/page/<int:curr>')
 def index(curr=1):
     post_pg = Post.query.paginate(page=curr, per_page=5)
+    latest_posts = Post.query.order_by(Post.add_time.desc()).limit(5).all()
     category_list = Category.query.all()
     tag_list = Tag.query.all()
     count = post_pg.total
