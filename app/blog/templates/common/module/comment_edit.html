@@ -1,5 +1,6 @@
 <div class="comment_bf">
     <form class="comment-edit layui-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         <h3 class="comment-title"><span style="font-size: 19px">😉</span>&nbsp;&nbsp;&nbsp;吹过岁月的和弦&nbsp;&nbsp;是你我相识的初篇
         </h3>
         <div class="layui-form" id="comment_board">
@@ -36,7 +37,8 @@
                 comment: field.content,
                 name: field.name,
                 email: field.email,
-                post_id: '{{ post.id }}'
+                post_id: '{{ post.id }}',
+                csrf_token: '{{ csrf_token() }}'
             }
             $.post('{{ url_for('blog.comment_add') }}', form_data, (res) => {
                 if (res === 'success') {

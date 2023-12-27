@@ -108,7 +108,7 @@ def comment_add():
     form_data = request.form
     visitor_ip = request.remote_addr
     visitor_address = search_with_file(visitor_ip)
-
+    print(form_data)
     comment = Comment(
         content=form_data['comment'],
         visitor_name=form_data['name'],

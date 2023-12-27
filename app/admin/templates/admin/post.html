@@ -5,11 +5,25 @@
 {% block main_title %}
     文章管理
 {% endblock %}
+{% block head %}
+    <style>
+        .layui-table-cell{
+            height: 42px;
+            line-height: 30px;
+        }
+    </style>
+{% endblock %}
 {% block content %}
     <div class="layui-container">
         <a class="button layui-btn" href="{{ url_for('admin.editor_post') }}">新增文章</a>
-        <table class="layui-hide" id="ID-table-demo-data"></table>
+        <table class="layui-hide" id="table-base"></table>
     </div>
+    <script type="text/html" id="theads-tool">
+        <div class="layui-clear-space">
+            <a class="layui-btn layui-btn-primary layui-btn-sm layui-bg-blue" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-primary layui-btn-sm layui-bg-red" lay-event="delete">删除</a>
+        </div>
+    </script>
 {% endblock %}
 {% block script %}
     <script>
@@ -21,32 +35,62 @@
 
 
             // 已知数据渲染
-            let inst = table.render({
-                elem: '#ID-table-demo-data',
+            table.render({
+                elem: '#table-base',
                 url: '{{ url_for("admin.post_query") }}',
                 cols: [[ //标题栏
-                    {field: 'id', title: '序号', width: 120, sort: true, align: 'center'},
+                    {field: 'id', title: '序号', width: 80, sort: true, align: 'center'},
                     {
                         field: 'title',
                         title: '文章标题',
                         width: '',
                         align: 'center',
-                        templet: (d)=>{
-                            return '<div><a href="/blog/post/'+ d.id +'" class="layui-table-link">'+ d.title + '</a></div>'
-                        }},
-                    {field: 'read_count', title: '阅读次数', width: 180, align: 'center'},
-                    {field: 'category', title: '文章分类', width: 180, align: 'center'},
-                    {field: 'add_time', title: '创建时间', width: 180, align: 'center'},
-                    {field: 'upd_time', title: '修改时间', width: 180, align: 'center'}
+                        templet: (d) => {
+                            return '<div><a href="/blog/post/' + d.id + '" class="layui-table-link">' + d.title + '</a></div>'
+                        }
+                    },
+                    {field: 'read_count', title: '阅读次数', width: 120, align: 'center'},
+                    {field: 'category', title: '文章分类', width: 120, align: 'center'},
+                    {field: 'add_time', title: '创建时间', width: 120, align: 'center'},
+                    {field: 'upd_time', title: '修改时间', width: 120, align: 'center'},
+                    {title: '操作', width: 140, align: 'center', toolbar: '#theads-tool'}
                 ]],
                 page: true, // 是否显示分页
                 limits: [10, 20, 30],
                 limit: 10 // 每页默认显示的数量
             });
 
+            // 头部工具栏事件
+            table.on('tool(table-base)', function (obj) {
+                let options = obj.config; // 获取当前表格属性配置项
+                let checkStatus = table.checkStatus(options.id); // 获取选中行相关数据
+                console.log(obj); // 查看对象所有成员
+                let itemId = obj.data.id // 当前行字段ID
 
-            {#inst.resize();#}
-            {#inst.setColsWidth();#}
+                // 根据不同的事件名进行相应的操作
+                switch (obj.event) { // 对应模板元素中的 lay-event 属性值
+                    case 'edit':
+                        console.log()
+                        break;
+                    case 'delete':
+                        $.ajax({
+                            type: 'delete', // 使用DELETE请求
+                            url: '{{ url_for("admin.delete_post") }}', // 后端处理程序的地址
+                            data: {id: itemId, csrf_token: '{{ csrf_token() }}'},
+                            success: (res) => {
+                                layer.msg('删除成功', {icon: 1, time: 1000}, () => {
+                                    window.location.href = '{{ url_for('admin.post') }}';
+                                    return false;
+                                });
+                            },
+                            error: (error) => {
+                                console.log(error)
+                            }
+                        });
+                        break;
+                }
+            });
+
         });
     </script>
 {% endblock %}

@@ -1,14 +1,21 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
-from app.blog.models import Category, Tag, Post, Attachment, Note
+import json
+
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask_login import login_user, login_required, logout_user
+from werkzeug.security import check_password_hash
+
 from app.admin.models import BlogInfo, User
+from app.blog.models import Category, Tag, Post, Attachment, Note
 from start import db, login_manager
 from start.settings import BASE_DIR
-from werkzeug.security import check_password_hash
-from flask_login import login_user, login_required, logout_user
-import json
 
 # 实例化蓝图
 bp = Blueprint('admin', __name__, url_prefix='/bf_admin', template_folder='templates', static_folder='static')
+
+
+@bp.route('/test')
+def test():
+    return render_template('admin/test.html')
 
 
 # 加载用户的回调函数
@@ -47,9 +54,6 @@ def logout():
     """
     logout_user()
     return redirect(url_for('admin.login'))
-
-
-from werkzeug.security import generate_password_hash
 
 
 # @bp.route('/register')
@@ -94,6 +98,20 @@ def editor_post():
     category_list = Category.query.all()
     tag_list = Tag.query.all()
     return render_template('admin/editor_post.html', **locals())
+
+
+@bp.route('/delete_post', methods=['delete'])
+@login_required
+def delete_post():
+    """
+    文章管理-删除文章API
+    :return:
+    """
+    post_id = request.form['id']
+    post_ = Post.query.get(post_id)
+    db.session.delete(post_)
+    db.session.commit()
+    return 'success'
 
 
 @bp.route('/post_add', methods=['post'])
