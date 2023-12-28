@@ -3,7 +3,7 @@
         {% for comment in all_comments %}
             <li class="layui-row">
                 <div class="layui-col-md1">
-                    <img src="{{ url_for('blog.static',filename='imgs/dog.jpg') }}" alt="">
+                    <img src="{{ url_for('blog.static',filename='imgs/liuyifei.jpg') }}" alt="">
                 </div>
                 <div class="layui-col-md11">
                     <strong>{{ comment.visitor_name }}</strong>
@@ -22,7 +22,7 @@
                             {% for reply in comment.replies %}
                                 <li class="layui-row">
                                     <div class="layui-col-md1">
-                                        <img src="{{ url_for('blog.static',filename='imgs/dog.jpg') }}" alt="">
+                                        <img src="{{ url_for('blog.static',filename='imgs/lyf.jpg') }}" alt="">
                                     </div>
                                     <div class="layui-col-md11" id="rpy{{ reply.id }}">
                                         {% if reply.reply_target_name %}
