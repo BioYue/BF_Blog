@@ -190,7 +190,8 @@
                                     html: html,
                                     markdown: markdown,
                                     img_list: JSON.stringify(img_list),
-                                    cover: cover
+                                    cover: cover,
+                                    csrf_token: '{{ csrf_token() }}'
                                 }
 
                                 $.post('{{ url_for('admin.post_add') }}', form_data, (res) => {
